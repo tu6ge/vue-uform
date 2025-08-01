@@ -17,5 +17,13 @@ const myScheme = createScheme((arg: SchemeArg) => {
     <u-field name="password" label="Password" help="please input your password" v-slot="{value, update}">
       <input :value="value" @input="update"></input>
     </u-field>
+
+    <u-field name="username" v-slot="{value, update}" custom>
+      <div class="full-custom-style">
+        <label >Username</label>
+        <input :value="value" @input="update"></input>
+        <div>Help message</div>
+      </div>
+    </u-field>
   </u-form>
 </template>

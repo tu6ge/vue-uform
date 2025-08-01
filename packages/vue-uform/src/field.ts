@@ -33,6 +33,16 @@ export const UField = defineComponent(
       value.value = event.target.value;
     };
 
+    if (props.custom) {
+      return () =>
+        ctx.slots.default
+          ? ctx.slots.default({
+              value: value.value,
+              update,
+            })
+          : "";
+    }
+
     return () =>
       h("div", { class: "u-field-wrap" }, [
         h("div", { class: "u-field-input-wrap" }, [
@@ -52,6 +62,7 @@ export const UField = defineComponent(
       label: String,
       help: String,
       scheme: Function,
+      custom: Boolean,
     },
   }
 );
