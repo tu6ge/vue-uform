@@ -8,8 +8,7 @@ export type { SchemeArg };
 
 export const UForm = defineComponent((props, ctx) => {
   return () =>
-    h("form", [
-      h("div", "Hello Form"),
+    h("form", { class: "u-form" }, [
       ctx.slots.default ? ctx.slots.default() : "",
     ]);
 });

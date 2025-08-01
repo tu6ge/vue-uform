@@ -34,9 +34,9 @@ export const UField = defineComponent(
     };
 
     return () =>
-      h("div", [
-        h("div", [
-          h("label", props.label),
+      h("div", { class: "u-field-wrap" }, [
+        h("div", { class: "u-field-input-wrap" }, [
+          h("label", { class: "u-label" }, props.label),
           ctx.slots.default
             ? ctx.slots.default({
                 value: value.value,
@@ -44,7 +44,7 @@ export const UField = defineComponent(
               })
             : "",
         ]),
-        h("div", props.help),
+        h("div", { class: "u-field-help" }, props.help),
       ]);
   },
   {
