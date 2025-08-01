@@ -28,9 +28,9 @@ export const UField = defineComponent(
     }
 
     const value = ref<string>("www");
-    const update = (event: InputEvent) => {
+    const update = (val: string) => {
       //console.log();
-      value.value = event.target.value;
+      value.value = val;
     };
 
     if (props.custom) {
