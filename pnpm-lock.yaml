@@ -26,7 +26,17 @@ importers:
         specifier: workspace:^
         version: link:../a
 
+  packages/vue-uform:
+    devDependencies:
+      vue:
+        specifier: ^3.5.18
+        version: 3.5.18(typescript@5.9.2)
+
   play:
+    dependencies:
+      vue-uform:
+        specifier: workspace:^
+        version: link:../packages/vue-uform
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.1

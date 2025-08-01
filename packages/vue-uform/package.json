@@ -1,17 +1,20 @@
 {
-  "name": "@vue-uform/b",
+  "name": "vue-uform",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
+  "main": "src/main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "packageManager": "pnpm@10.13.1",
-  "dependencies": {
-    "@vue-uform/a": "workspace:^"
+  "devDependencies": {
+    "vue": "^3.5.18"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.18"
   }
 }

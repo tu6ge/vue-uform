@@ -1,15 +1,13 @@
 {
-  "name": "vue-uform",
-  "version": "1.0.0",
+  "private":"true",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "sass": "^1.89.2",
