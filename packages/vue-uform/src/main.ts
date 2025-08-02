@@ -1,9 +1,8 @@
 import { defineComponent, h } from "vue";
 import type { App } from "vue";
 import { UField } from "./field";
-import { createScheme, SchemeArg } from "./field-scheme";
+import { SchemeArg } from "./field-scheme";
 
-export { createScheme };
 export type { SchemeArg };
 
 export const UForm = defineComponent((props, ctx) => {

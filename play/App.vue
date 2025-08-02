@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { h } from "vue";
-import { createScheme, SchemeArg } from "vue-uform";
+import { SchemeArg } from "vue-uform";
 
-const myScheme = createScheme((arg: SchemeArg) => {
+const myScheme = (arg: SchemeArg) => {
   return h(
     "div",
     {
@@ -10,13 +10,32 @@ const myScheme = createScheme((arg: SchemeArg) => {
     },
     [h("label", arg.label)]
   );
-});
+};
+
+const myScheme2 = (arg: SchemeArg) => {
+  return h(
+    "div",
+    {
+      style: { color: "green" },
+    },
+    [h("label", arg.label), arg.getSlots(), h("div", arg.valueRef.value)]
+  );
+};
 </script>
 
 <template>
   <div>Welcome</div>
   <u-form abc="7687">
     <u-field name="username" label="Username" :scheme="myScheme"></u-field>
+    <u-field
+      name="username"
+      label="Scheme2"
+      :scheme="myScheme2"
+      v-slot="{ value, update }"
+      value="hello"
+    >
+      <input :value="value" @input="update($event.target.value)" />
+    </u-field>
 
     <u-field
       name="password"

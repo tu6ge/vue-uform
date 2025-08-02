@@ -17,11 +17,22 @@ export interface FieldProps {
 
 export const UField = defineComponent(
   (props, ctx) => {
-    console.log("props", props);
+    //console.log("props", props);
     let schemeArg: SchemeArg = {
       label: props.label,
+      value: props.value || "",
+      valueRef: ref(props.value || ""),
       help: props.help,
-      slots: ctx.slots,
+      getSlots: () => {
+        return ctx.slots.default
+          ? ctx.slots.default({
+              value: schemeArg.valueRef.value,
+              update: (val: string) => {
+                schemeArg.valueRef.value = val;
+              },
+            })
+          : undefined;
+      },
     };
     if (props.scheme) {
       return () => props.scheme(schemeArg);
@@ -61,6 +72,7 @@ export const UField = defineComponent(
     props: {
       label: String,
       help: String,
+      value: String,
       scheme: Function,
       custom: Boolean,
     },

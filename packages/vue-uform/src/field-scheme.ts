@@ -1,11 +1,11 @@
-import { SlotsType, VNode } from "vue";
+import { Ref, VNode } from "vue";
 
 export interface SchemeArg {
   label: string;
+  value?: string;
+  valueRef: Ref<string>;
   help: string | undefined;
-  slots: SlotsType<Record<string, any>>;
+  // slots: Slots;
+  //update(a: string): void;
+  getSlots(): VNode[] | undefined;
 }
-
-export const createScheme = (fn: (arg: SchemeArg) => VNode) => {
-  return fn;
-};
