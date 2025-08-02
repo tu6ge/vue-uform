@@ -42,7 +42,7 @@ export const UField = defineComponent(
               update: (val: string) => {
                 schemeArg.valueRef.value = val;
                 ctx.emit("update:modelValue", val);
-                formUpdate(props.name, val);
+                formUpdate && formUpdate(props.name, val);
               },
             })
           : undefined;
@@ -59,7 +59,7 @@ export const UField = defineComponent(
       //console.log();
       value.value = val;
       ctx.emit("update:modelValue", val);
-      formUpdate(props.name, val);
+      formUpdate && formUpdate(props.name, val);
     };
 
     if (props.custom) {
