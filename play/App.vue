@@ -59,6 +59,7 @@ const myScheme2 = (arg: SchemeArg) => {
       name="password"
       label="NaiveInput"
       help="please input your password"
+      value="accc"
       v-slot="{ value, update }"
     >
       <n-input :value="value" @input="update($event)" />

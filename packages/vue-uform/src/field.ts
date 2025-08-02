@@ -38,7 +38,7 @@ export const UField = defineComponent(
       return () => props.scheme(schemeArg);
     }
 
-    const value = ref<string>("www");
+    const value = ref<string>(props.value || "");
     const update = (val: string) => {
       //console.log();
       value.value = val;
