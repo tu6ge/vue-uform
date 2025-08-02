@@ -25,11 +25,20 @@ const myScheme2 = (arg: SchemeArg) => {
 
 const username = ref("Join");
 const email = ref("xxx@yyy.com");
+const formValues = {
+  username: "Join",
+  password: "101010",
+  email: "xxx@yyy.com",
+};
+
+function doSave(data: Object) {
+  console.log(data);
+}
 </script>
 
 <template>
   <div>Welcome</div>
-  <u-form abc="7687">
+  <u-form :values="formValues" @submit="doSave">
     <u-field name="username" label="Username" :scheme="myScheme"></u-field>
     <u-field
       name="username"
@@ -78,5 +87,7 @@ const email = ref("xxx@yyy.com");
     >
       <n-input :value="value" @input="update($event)" />
     </u-field>
+
+    <u-submit></u-submit>
   </u-form>
 </template>

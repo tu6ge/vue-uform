@@ -1,6 +1,7 @@
 import { Ref, VNode } from "vue";
 
 export interface SchemeArg {
+  name: string;
   label: string;
   value?: string;
   valueRef: Ref<string>;
