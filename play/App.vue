@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { h } from "vue";
 import { SchemeArg } from "vue-uform";
+import { NInput } from "naive-ui";
 
 const myScheme = (arg: SchemeArg) => {
   return h(
@@ -52,6 +53,15 @@ const myScheme2 = (arg: SchemeArg) => {
         <input :value="value" @input="update($event.target.value)" />
         <div>Help message</div>
       </div>
+    </u-field>
+
+    <u-field
+      name="password"
+      label="NaiveInput"
+      help="please input your password"
+      v-slot="{ value, update }"
+    >
+      <n-input :value="value" @input="update($event)" />
     </u-field>
   </u-form>
 </template>

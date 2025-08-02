@@ -17,6 +17,7 @@
     "vite": "^7.0.6"
   },
   "dependencies": {
+    "naive-ui": "^2.42.0",
     "vue-uform": "workspace:^"
   }
 }

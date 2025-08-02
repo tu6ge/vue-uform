@@ -65,6 +65,7 @@ export const UField = defineComponent(
               })
             : "",
         ]),
+        h("div", { class: "u-field-help" }, "value:" + value.value),
         h("div", { class: "u-field-help" }, props.help),
       ]);
   },
