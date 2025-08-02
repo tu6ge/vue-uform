@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { h } from "vue";
+import { h, ref } from "vue";
 import { SchemeArg } from "vue-uform";
 import { NInput } from "naive-ui";
 
@@ -22,6 +22,9 @@ const myScheme2 = (arg: SchemeArg) => {
     [h("label", arg.label), arg.getSlots(), h("div", arg.valueRef.value)]
   );
 };
+
+const username = ref("Join");
+const email = ref("xxx@yyy.com");
 </script>
 
 <template>
@@ -39,8 +42,19 @@ const myScheme2 = (arg: SchemeArg) => {
     </u-field>
 
     <u-field
+      name="username"
+      label="Scheme2 Email"
+      :scheme="myScheme2"
+      v-slot="{ value, update }"
+      v-model="email"
+    >
+      <input :value="value" @input="update($event.target.value)" />
+    </u-field>
+
+    <u-field
       name="password"
       label="Password"
+      v-model="username"
       help="please input your password"
       v-slot="{ value, update }"
     >

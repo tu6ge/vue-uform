@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import { plugin, SchemeArg } from "../src/main";
-import { h } from "vue";
+import { h, ref } from "vue";
 
 test("test field component class names", () => {
   const wrapper = mount(
@@ -72,12 +72,33 @@ test("test field component value", async () => {
   );
 
   expect(wrapper.find("input").element.value).toBe("init value");
+});
+
+test("test field component v-model", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const username = ref("init value");
+        return {
+          username,
+        };
+      },
+      template: `<u-field v-model="username" v-slot="{value,update}">
+        <input :value="value" @input="update($event.target.value)" />
+      </u-field>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  expect(wrapper.find("input").element.value).toBe("init value");
 
   await wrapper.find("input").setValue("new value");
 
-  expect(wrapper.html()).toContain(
-    '<div class="u-field-help">value:new value</div>'
-  );
+  expect(wrapper.vm.username).toBe("new value");
 });
 
 test("test field component custom prop", async () => {
@@ -101,8 +122,13 @@ test("test field component custom prop", async () => {
 test("test field component custom and slot params", async () => {
   const wrapper = mount(
     {
-      setup() {},
-      template: `<u-field value="init value" v-slot="{value,update}" custom>
+      setup() {
+        const username = ref("Join");
+        return {
+          username,
+        };
+      },
+      template: `<u-field v-model="username" v-slot="{value,update}" custom>
         <label>custom scheme</label>
         <input :value="value" @input="update($event.target.value)" />
       </u-field>`,
@@ -116,9 +142,11 @@ test("test field component custom and slot params", async () => {
 
   expect(wrapper.html()).toContain("<label>custom scheme</label>");
 
-  expect(wrapper.find("input").element.value).toBe("init value");
+  expect(wrapper.find("input").element.value).toBe("Join");
 
-  // TODO test update event
+  await wrapper.find("input").setValue("Foo");
+
+  expect(wrapper.vm.username).toBe("Foo");
 });
 
 test("test field component custom scheme", async () => {
@@ -162,4 +190,45 @@ test("test field component custom scheme", async () => {
   await wrapper.find("input").setValue("new value");
 
   expect(wrapper.find(".real-value").text()).toBe("new value");
+});
+
+test("test field component custom scheme v-model", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const myScheme = (arg: SchemeArg) => {
+          return h(
+            "div",
+            {
+              style: { color: "green" },
+            },
+            [h("label", arg.label), arg.getSlots()]
+          );
+        };
+        const email = ref("xxx@yyy.com");
+        return {
+          myScheme,
+          email,
+        };
+      },
+      template: `<u-field :scheme="myScheme" label="FooLabel" v-model="email" v-slot="{value,update}" >
+        <input :value="value" @input="update($event.target.value)" />
+      </u-field>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  expect(wrapper.html()).toContain(
+    `<div style="color: green;"><label>FooLabel</label>`
+  );
+
+  expect(wrapper.find("input").element.value).toBe("xxx@yyy.com");
+
+  await wrapper.find("input").setValue("aaa@bbb.com");
+
+  expect(wrapper.vm.email).toBe("aaa@bbb.com");
 });

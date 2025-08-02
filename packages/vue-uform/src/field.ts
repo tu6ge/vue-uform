@@ -21,7 +21,7 @@ export const UField = defineComponent(
     let schemeArg: SchemeArg = {
       label: props.label,
       value: props.value || "",
-      valueRef: ref(props.value || ""),
+      valueRef: ref(props.modelValue || props.value || ""),
       help: props.help,
       getSlots: () => {
         return ctx.slots.default
@@ -29,6 +29,7 @@ export const UField = defineComponent(
               value: schemeArg.valueRef.value,
               update: (val: string) => {
                 schemeArg.valueRef.value = val;
+                ctx.emit("update:modelValue", val);
               },
             })
           : undefined;
@@ -38,10 +39,11 @@ export const UField = defineComponent(
       return () => props.scheme(schemeArg);
     }
 
-    const value = ref<string>(props.value || "");
+    const value = ref<string>(props.modelValue || props.value || "");
     const update = (val: string) => {
       //console.log();
       value.value = val;
+      ctx.emit("update:modelValue", val);
     };
 
     if (props.custom) {
@@ -65,7 +67,6 @@ export const UField = defineComponent(
               })
             : "",
         ]),
-        h("div", { class: "u-field-help" }, "value:" + value.value),
         h("div", { class: "u-field-help" }, props.help),
       ]);
   },
@@ -74,8 +75,10 @@ export const UField = defineComponent(
       label: String,
       help: String,
       value: String,
+      modelValue: String,
       scheme: Function,
       custom: Boolean,
     },
+    emits: ["update:modelValue"],
   }
 );
