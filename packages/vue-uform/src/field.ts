@@ -1,14 +1,4 @@
-import {
-  h,
-  Prop,
-  ref,
-  SetupContext,
-  SlotsType,
-  VNode,
-  defineComponent,
-  inject,
-  Ref,
-} from "vue";
+import { h, ref, VNode, defineComponent, inject, Ref } from "vue";
 import { SchemeArg } from "./field-scheme";
 import { FormValues } from "./form";
 

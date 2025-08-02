@@ -1,4 +1,3 @@
-import { defineComponent, h } from "vue";
 import type { App } from "vue";
 import { UField } from "./field";
 import { SchemeArg } from "./field-scheme";
