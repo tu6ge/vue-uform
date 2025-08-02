@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { h, ref } from "vue";
 import { SchemeArg } from "vue-uform";
-import { NInput } from "naive-ui";
+import { NInput, NButton } from "naive-ui";
 
 const myScheme = (arg: SchemeArg) => {
   return h(
@@ -88,6 +88,10 @@ function doSave(data: Object) {
       <n-input :value="value" @input="update($event)" />
     </u-field>
 
-    <u-submit></u-submit>
+    <u-submit>Save</u-submit>
+
+    <u-submit custom v-slot="{ submit }">
+      <n-button @click="submit">Submit</n-button>
+    </u-submit>
   </u-form>
 </template>
