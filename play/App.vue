@@ -83,11 +83,17 @@ function doSave(data: Object) {
       <input :value="value" @input="update($event.target.value)" />
     </u-field>
 
-    <u-field name="username" v-slot="{ value, update }" custom>
+    <u-field
+      name="username"
+      validation="required"
+      v-slot="{ value, update, messages }"
+      custom
+    >
       <div class="full-custom-style">
         <label>Username</label>
         <input :value="value" @input="update($event.target.value)" />
         <div>Help message</div>
+        <div>{{ JSON.stringify(messages) }}</div>
       </div>
     </u-field>
 
@@ -95,10 +101,14 @@ function doSave(data: Object) {
       name="password2"
       label="NaiveInput"
       help="please input your password"
-      value="accc"
-      v-slot="{ value, update }"
+      validation="required"
+      v-slot="{ value, update, hasError }"
     >
-      <n-input :value="value" @input="update($event)" />
+      <n-input
+        :value="value"
+        @input="update($event)"
+        :status="hasError ? 'error' : undefined"
+      />
     </u-field>
 
     <u-submit>Save</u-submit>

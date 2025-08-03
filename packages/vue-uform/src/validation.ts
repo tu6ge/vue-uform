@@ -40,7 +40,7 @@ export function validatior(
     let res = validationList[valid.name].validator(value, ...valid.params);
     if (res !== true) {
       let msg = res as string;
-      if (valid.name in custom_messages) {
+      if (custom_messages && valid.name in custom_messages) {
         msg = custom_messages[valid.name] as string;
       }
       messages.push(msg);

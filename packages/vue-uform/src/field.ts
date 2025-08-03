@@ -60,6 +60,7 @@ export const UField = defineComponent(
     const value = ref<string>(
       thisValue || props.modelValue || props.value || ""
     );
+    const hasError = ref(false);
     const fieldNode = createFieldNode({ name: props.name, value }, formValues);
     const doValidator = () => {
       let validator_result = validatior(
@@ -68,9 +69,11 @@ export const UField = defineComponent(
         props.validationMessages
       );
       if (validator_result !== true) {
+        hasError.value = true;
         validationMessages.value = validator_result as string[];
         formUpdateValidator && formUpdateValidator(props.name, false);
       } else {
+        hasError.value = false;
         validationMessages.value = [];
         formUpdateValidator && formUpdateValidator(props.name, true);
       }
@@ -92,6 +95,8 @@ export const UField = defineComponent(
           ? ctx.slots.default({
               value: value.value,
               update,
+              hasError: hasError.value,
+              messages: validationMessages.value,
             })
           : "";
     }
@@ -104,6 +109,8 @@ export const UField = defineComponent(
             ? ctx.slots.default({
                 value: value.value,
                 update,
+                hasError: hasError.value,
+                messages: validationMessages.value,
               })
             : "",
         ]),
