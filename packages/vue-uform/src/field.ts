@@ -9,6 +9,12 @@ export interface FieldProps {
   scheme?: (arg: SchemeArg) => VNode;
 }
 
+export type FieldNode = {
+  name: string;
+  value: Ref<string>;
+  at: (path: string) => FieldNode;
+};
+
 export const UField = defineComponent(
   (props, ctx) => {
     const formValues = inject<Ref<FormValues>>("u-form-values", ref({}));
@@ -52,11 +58,13 @@ export const UField = defineComponent(
     const value = ref<string>(
       thisValue || props.modelValue || props.value || ""
     );
+    const fieldNode = createFieldNode({ name: props.name, value }, formValues);
     const update = (val: string) => {
       value.value = val;
       ctx.emit("update:modelValue", val);
       formUpdate && formUpdate(props.name, val);
-      let validator_result = validatior(val, props.validation);
+
+      let validator_result = validatior(fieldNode, props.validation);
       if (validator_result !== true) {
         validationMessages.value = validator_result as string[];
         formUpdateValidator && formUpdateValidator(props.name, false);
@@ -115,3 +123,17 @@ export const UField = defineComponent(
     emits: ["update:modelValue"],
   }
 );
+
+export function createFieldNode(
+  node: Omit<FieldNode, "at">,
+  values: FormValues
+): FieldNode {
+  return {
+    ...node,
+    at(path: string): FieldNode {
+      // TODO Multidimensional form fields were not considered
+      let value = values[path] || "";
+      return createFieldNode({ name: path, value }, values);
+    },
+  };
+}

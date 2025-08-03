@@ -1,3 +1,4 @@
+import { FieldNode } from "./field";
 import { validationList } from "./validation-buildin";
 
 export interface Validation {
@@ -29,7 +30,7 @@ export function parseValidations(s: string): Validation[] {
 }
 
 export function validatior(
-  value: string,
+  value: FieldNode,
   validations_str: string
 ): boolean | string[] {
   const validations = parseValidations(validations_str);

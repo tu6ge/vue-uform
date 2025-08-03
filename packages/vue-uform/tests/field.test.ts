@@ -2,6 +2,8 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import { plugin, SchemeArg } from "../src/main";
 import { h, ref } from "vue";
+import { FormValues } from "../src/form";
+import { createFieldNode, FieldNode } from "../src/field";
 
 test("test field component class names", () => {
   const wrapper = mount(
@@ -231,4 +233,17 @@ test("test field component custom scheme v-model", async () => {
   await wrapper.find("input").setValue("aaa@bbb.com");
 
   expect(wrapper.vm.email).toBe("aaa@bbb.com");
+});
+
+test("test createFieldNode function", () => {
+  let formValues: FormValues = {
+    username: "Join",
+    password: "101010",
+  };
+  let field = createFieldNode(
+    { name: "username", value: ref("Foo") },
+    formValues
+  );
+  expect(field.at("password").name).toBe("password");
+  expect(field.at("password").value).toBe("101010");
 });

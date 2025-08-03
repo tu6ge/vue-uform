@@ -1,15 +1,17 @@
+import { FieldNode } from "./field";
+
 export interface ValidationList {
   [name: string]: {
     message: string;
-    validator: (...arg: string[]) => string | boolean;
+    validator: (node: FieldNode, ...arg: string[]) => string | boolean;
   };
 }
 
 export const validationList: ValidationList = {
   required: {
     message: "this field is required",
-    validator(value: string): string | boolean {
-      if (value) {
+    validator({ value }: FieldNode): string | boolean {
+      if (value.value) {
         return true;
       }
       return this.message;
@@ -17,8 +19,8 @@ export const validationList: ValidationList = {
   },
   number: {
     message: "this field must be a number",
-    validator(value: string): string | boolean {
-      if (/^[0-9\.eE]+$/.test(value)) {
+    validator({ value }: FieldNode): string | boolean {
+      if (/^[0-9\.eE]+$/.test(value.value)) {
         return true;
       }
       return this.message;
