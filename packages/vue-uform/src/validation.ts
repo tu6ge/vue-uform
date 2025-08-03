@@ -31,14 +31,19 @@ export function parseValidations(s: string): Validation[] {
 
 export function validatior(
   value: FieldNode,
-  validations_str: string
+  validations_str: string,
+  custom_messages: { [key: string]: string }
 ): boolean | string[] {
   const validations = parseValidations(validations_str);
   let messages: string[] = [];
   validations.map((valid) => {
     let res = validationList[valid.name].validator(value, ...valid.params);
     if (res !== true) {
-      messages.push(res as string);
+      let msg = res as string;
+      if (valid.name in custom_messages) {
+        msg = custom_messages[valid.name] as string;
+      }
+      messages.push(msg);
     }
   });
   if (messages.length === 0) {

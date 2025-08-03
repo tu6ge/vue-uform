@@ -74,6 +74,9 @@ function doSave(data: Object) {
       name="confirm_password"
       label="Cofirm Password"
       validation="required|confirm:password"
+      :validation-messages="{
+        confirm: 'the confirm password is not same as password',
+      }"
       help="please input your password again"
       v-slot="{ value, update }"
     >

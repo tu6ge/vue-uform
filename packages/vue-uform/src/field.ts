@@ -62,7 +62,11 @@ export const UField = defineComponent(
     );
     const fieldNode = createFieldNode({ name: props.name, value }, formValues);
     const doValidator = () => {
-      let validator_result = validatior(fieldNode, props.validation);
+      let validator_result = validatior(
+        fieldNode,
+        props.validation,
+        props.validationMessages
+      );
       if (validator_result !== true) {
         validationMessages.value = validator_result as string[];
         formUpdateValidator && formUpdateValidator(props.name, false);
