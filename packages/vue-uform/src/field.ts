@@ -1,4 +1,4 @@
-import { h, ref, VNode, defineComponent, inject, Ref } from "vue";
+import { h, ref, VNode, defineComponent, inject, Ref, watch } from "vue";
 import { SchemeArg } from "./field-scheme";
 import { FormValues } from "./form";
 import { validatior } from "./validation";
@@ -30,6 +30,8 @@ export const UField = defineComponent(
       undefined as unknown
     ) as (key: string, value: boolean) => void;
 
+    const isSubmitUseid = inject("u-form-do-submit-useid", ref("0"));
+
     const validationMessages = ref<string[]>([]);
 
     let schemeArg: SchemeArg = {
@@ -59,11 +61,7 @@ export const UField = defineComponent(
       thisValue || props.modelValue || props.value || ""
     );
     const fieldNode = createFieldNode({ name: props.name, value }, formValues);
-    const update = (val: string) => {
-      value.value = val;
-      ctx.emit("update:modelValue", val);
-      formUpdate && formUpdate(props.name, val);
-
+    const doValidator = () => {
       let validator_result = validatior(fieldNode, props.validation);
       if (validator_result !== true) {
         validationMessages.value = validator_result as string[];
@@ -72,6 +70,16 @@ export const UField = defineComponent(
         validationMessages.value = [];
         formUpdateValidator && formUpdateValidator(props.name, true);
       }
+    };
+    watch(isSubmitUseid, () => {
+      doValidator();
+    });
+    const update = (val: string) => {
+      value.value = val;
+      ctx.emit("update:modelValue", val);
+      formUpdate && formUpdate(props.name, val);
+
+      doValidator();
     };
 
     if (props.custom) {

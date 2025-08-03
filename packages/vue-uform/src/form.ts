@@ -1,4 +1,4 @@
-import { defineComponent, h, provide, ref, unref } from "vue";
+import { defineComponent, h, nextTick, provide, ref, unref, useId } from "vue";
 
 export type FormValues = {
   [key: string]: any;
@@ -18,7 +18,11 @@ export const UForm = defineComponent(
     provide("u-form-update-validator", (key: string, value: boolean) => {
       thisValidatorResult.value[key] = value;
     });
-    provide("u-form-submit", () => {
+    const doSubmitUseid = ref("");
+    provide("u-form-do-submit-useid", doSubmitUseid);
+    provide("u-form-submit", async () => {
+      doSubmitUseid.value = new Date().toUTCString();
+      await nextTick();
       let hasValidatorError = false;
       for (const item in thisValidatorResult.value) {
         if (thisValidatorResult.value[item] === false) {
