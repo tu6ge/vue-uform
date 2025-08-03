@@ -26,4 +26,15 @@ export const validationList: ValidationList = {
       return this.message;
     },
   },
+  confirm: {
+    message: "confirm password is diffence of password",
+    validator(node: FieldNode, other_path: string): string | boolean {
+      const thisValue = node.value;
+      const otherValue = node.at(other_path).value;
+      if (thisValue.value === otherValue.value) {
+        return true;
+      }
+      return this.message;
+    },
+  },
 };

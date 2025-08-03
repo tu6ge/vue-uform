@@ -70,6 +70,15 @@ function doSave(data: Object) {
     >
       <input :value="value" @input="update($event.target.value)" />
     </u-field>
+    <u-field
+      name="confirm_password"
+      label="Cofirm Password"
+      validation="required|confirm:password"
+      help="please input your password again"
+      v-slot="{ value, update }"
+    >
+      <input :value="value" @input="update($event.target.value)" />
+    </u-field>
 
     <u-field name="username" v-slot="{ value, update }" custom>
       <div class="full-custom-style">
@@ -80,7 +89,7 @@ function doSave(data: Object) {
     </u-field>
 
     <u-field
-      name="password"
+      name="password2"
       label="NaiveInput"
       help="please input your password"
       value="accc"

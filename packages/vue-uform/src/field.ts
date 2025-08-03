@@ -132,7 +132,7 @@ export function createFieldNode(
     ...node,
     at(path: string): FieldNode {
       // TODO Multidimensional form fields were not considered
-      let value = values[path] || "";
+      let value = ref(values.value[path]);
       return createFieldNode({ name: path, value }, values);
     },
   };
