@@ -15,14 +15,14 @@ export const UField = defineComponent(
 
     let thisValue = formValues.value[props.name];
 
-    const formUpdate = inject("u-form-update") as (
+    const formUpdate = inject("u-form-update", undefined as unknown) as (
       key: string,
       value: string
     ) => void;
-    const formUpdateValidator = inject("u-form-update-validator") as (
-      key: string,
-      value: boolean
-    ) => void;
+    const formUpdateValidator = inject(
+      "u-form-update-validator",
+      undefined as unknown
+    ) as (key: string, value: boolean) => void;
 
     const validationMessages = ref<string[]>([]);
 
