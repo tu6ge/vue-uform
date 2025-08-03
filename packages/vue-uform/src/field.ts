@@ -1,6 +1,7 @@
 import { h, ref, VNode, defineComponent, inject, Ref } from "vue";
 import { SchemeArg } from "./field-scheme";
 import { FormValues } from "./form";
+import { validatior } from "./validation";
 
 export interface FieldProps {
   name: string;
@@ -18,6 +19,12 @@ export const UField = defineComponent(
       key: string,
       value: string
     ) => void;
+    const formUpdateValidator = inject("u-form-update-validator") as (
+      key: string,
+      value: boolean
+    ) => void;
+
+    const validationMessages = ref<string[]>([]);
 
     let schemeArg: SchemeArg = {
       name: props.name,
@@ -46,10 +53,17 @@ export const UField = defineComponent(
       thisValue || props.modelValue || props.value || ""
     );
     const update = (val: string) => {
-      //console.log();
       value.value = val;
       ctx.emit("update:modelValue", val);
       formUpdate && formUpdate(props.name, val);
+      let validator_result = validatior(val, props.validation);
+      if (validator_result !== true) {
+        validationMessages.value = validator_result as string[];
+        formUpdateValidator && formUpdateValidator(props.name, false);
+      } else {
+        validationMessages.value = [];
+        formUpdateValidator && formUpdateValidator(props.name, true);
+      }
     };
 
     if (props.custom) {
@@ -74,6 +88,13 @@ export const UField = defineComponent(
             : "",
         ]),
         h("div", { class: "u-field-help" }, props.help),
+        h(
+          "ul",
+          { class: "u-validation-message" },
+          validationMessages.value.map((res) => {
+            return h("li", res);
+          })
+        ),
       ]);
   },
   {
@@ -85,6 +106,11 @@ export const UField = defineComponent(
       modelValue: String,
       scheme: Function,
       custom: Boolean,
+      validation: {
+        type: String,
+        default: "",
+      },
+      validationMessages: Object,
     },
     emits: ["update:modelValue"],
   }

@@ -64,6 +64,7 @@ function doSave(data: Object) {
       name="password"
       label="Password"
       v-model="username"
+      validation="required|number"
       help="please input your password"
       v-slot="{ value, update }"
     >
