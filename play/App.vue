@@ -47,7 +47,10 @@ function doSave(data: Object) {
       v-slot="{ value, update }"
       value="hello"
     >
-      <input :value="value" @input="update($event.target.value)" />
+      <input
+        :value="value"
+        @input="update(($event.target as HTMLInputElement).value)"
+      />
     </u-field>
 
     <u-field
@@ -57,7 +60,10 @@ function doSave(data: Object) {
       v-slot="{ value, update }"
       v-model="email"
     >
-      <input :value="value" @input="update($event.target.value)" />
+      <input
+        :value="value"
+        @input="update(($event.target as HTMLInputElement).value)"
+      />
     </u-field>
 
     <u-field
@@ -68,7 +74,10 @@ function doSave(data: Object) {
       help="please input your password"
       v-slot="{ value, update }"
     >
-      <input :value="value" @input="update($event.target.value)" />
+      <input
+        :value="value"
+        @input="update(($event.target as HTMLInputElement).value)"
+      />
     </u-field>
     <u-field
       name="confirm_password"
@@ -80,7 +89,10 @@ function doSave(data: Object) {
       help="please input your password again"
       v-slot="{ value, update }"
     >
-      <input :value="value" @input="update($event.target.value)" />
+      <input
+        :value="value"
+        @input="update(($event.target as HTMLInputElement).value)"
+      />
     </u-field>
 
     <u-field
@@ -91,7 +103,10 @@ function doSave(data: Object) {
     >
       <div class="full-custom-style">
         <label>Username</label>
-        <input :value="value" @input="update($event.target.value)" />
+        <input
+          :value="value"
+          @input="update(($event.target as HTMLInputElement).value)"
+        />
         <div>Help message</div>
         <div>{{ JSON.stringify(messages) }}</div>
       </div>
