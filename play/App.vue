@@ -2,6 +2,7 @@
 import { h, ref } from "vue";
 import { SchemeArg } from "vue-uform";
 import { NInput, NButton } from "naive-ui";
+import { FieldNode } from "packages/vue-uform/src/field";
 
 const myScheme = (arg: SchemeArg) => {
   return h(
@@ -33,6 +34,14 @@ const formValues = {
 
 function doSave(data: Object) {
   console.log(data);
+}
+
+function isfruit(node: FieldNode): boolean | string {
+  const { value } = node;
+  if (value.value != "apple" && value.value != "banan") {
+    return "this value is not apple or banan";
+  }
+  return true;
 }
 </script>
 
@@ -117,6 +126,21 @@ function doSave(data: Object) {
       label="NaiveInput"
       help="please input your password"
       validation="required"
+      v-slot="{ value, update, hasError }"
+    >
+      <n-input
+        :value="value"
+        @input="update($event)"
+        :status="hasError ? 'error' : undefined"
+      />
+    </u-field>
+
+    <u-field
+      name="fruit"
+      label="Fruit"
+      help="please input a fruit"
+      :rules="{ isfruit }"
+      validation="required|isfruit"
       v-slot="{ value, update, hasError }"
     >
       <n-input

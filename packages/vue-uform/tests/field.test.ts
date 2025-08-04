@@ -307,3 +307,39 @@ test("test field component validation custom message", async () => {
 
   expect(wrapper.html()).contain("<li>the FooLabel should be a number</li>");
 });
+
+test("test field component custom validation", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        function isfruit(node: FieldNode): boolean | string {
+          const { value } = node;
+          if (value.value != "apple" && value.value != "banan") {
+            return "this value is not apple or banan";
+          }
+          return true;
+        }
+        return {
+          isfruit,
+        };
+      },
+      template: `<u-field label="FooLabel" validation="required|isfruit" 
+      :rules="{ isfruit }" v-slot="{value,update}" >
+        <input :value="value" @input="update($event.target.value)" />
+      </u-field>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  await wrapper.find("input").setValue("abc");
+
+  expect(wrapper.html()).contain("<li>this value is not apple or banan</li>");
+
+  await wrapper.find("input").setValue("apple");
+
+  expect(wrapper.html()).contain(`<ul class="u-validation-message"></ul>`);
+});

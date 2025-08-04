@@ -6,7 +6,7 @@ export interface ValidationList {
   };
 }
 
-export const validationList: ValidationList = {
+const validationList: ValidationList = {
   required: {
     validator({ value }: FieldNode): string | boolean {
       if (value.value) {
@@ -34,3 +34,15 @@ export const validationList: ValidationList = {
     },
   },
 };
+
+export function getValidations(extend: {
+  [key: string]: (node: FieldNode, ...arg: string[]) => boolean | string;
+}): ValidationList {
+  let list = validationList;
+  for (const item in extend) {
+    list[item] = {
+      validator: extend[item],
+    };
+  }
+  return list;
+}

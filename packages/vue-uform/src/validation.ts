@@ -1,6 +1,6 @@
 import { FieldNode } from "./field";
 import { getMessage } from "./message";
-import { validationList } from "./validation-buildin";
+import { getValidations } from "./validation-buildin";
 
 export interface Validation {
   name: string;
@@ -33,14 +33,27 @@ export function parseValidations(s: string): Validation[] {
 export function validatior(
   node: FieldNode,
   validations_str: string,
-  custom_messages: { [key: string]: string }
+  custom_messages: { [key: string]: string },
+  rules: {
+    [key: string]: (node: FieldNode, ...arg: string[]) => boolean | string;
+  }
 ): boolean | string[] {
   const validations = parseValidations(validations_str);
   let messages: string[] = [];
+  const validationList = getValidations(rules);
   validations.map((valid) => {
+    if (!(valid.name in validationList)) {
+      throw new Error(`invalid validation name "${valid.name}"`);
+    }
     let res = validationList[valid.name].validator(node, ...valid.params);
     if (res !== true) {
       let msg = getMessage(valid.name, node);
+
+      // custom rule,when validator failed ,it return a string message
+      if (typeof res == "string") {
+        msg = res;
+      }
+
       if (custom_messages && valid.name in custom_messages) {
         msg = custom_messages[valid.name] as string;
       }

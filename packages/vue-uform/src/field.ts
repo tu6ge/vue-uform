@@ -79,7 +79,8 @@ export const UField = defineComponent(
       let validator_result = validatior(
         fieldNode,
         props.validation,
-        props.validationMessages
+        props.validationMessages,
+        props.rules
       );
       if (validator_result !== true) {
         hasError.value = true;
@@ -151,6 +152,7 @@ export const UField = defineComponent(
         default: "",
       },
       validationMessages: Object,
+      rules: Object,
     },
     emits: ["update:modelValue"],
   }
