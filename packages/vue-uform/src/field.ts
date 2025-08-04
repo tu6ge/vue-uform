@@ -1,4 +1,13 @@
-import { h, ref, VNode, defineComponent, inject, Ref, watch } from "vue";
+import {
+  h,
+  ref,
+  VNode,
+  defineComponent,
+  inject,
+  Ref,
+  watch,
+  PropType,
+} from "vue";
 import { SchemeArg } from "./field-scheme";
 import { FormValues } from "./form";
 import { validatior } from "./validation";
@@ -131,7 +140,7 @@ export const UField = defineComponent(
       help: String,
       value: String,
       modelValue: String,
-      scheme: Function,
+      scheme: Function as PropType<(arg: SchemeArg) => VNode>,
       custom: Boolean,
       validation: {
         type: String,
