@@ -61,7 +61,7 @@ test("test form component values props", async () => {
 
   expect(Object.values(wrapper.vm.result).length).toBe(3);
 
-  expect(wrapper.vm.result.username).toBe("Join");
+  expect((wrapper.vm.result as { username: string }).username).toBe("Join");
 });
 
 test("test form component validation error", async () => {
