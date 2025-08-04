@@ -112,13 +112,16 @@ const myFieldScheme = createField((cxt) => {
 
 ```vue
 <script setup lang="ts">
-function isfruit(node) {
-  const { value } = node;
-  if (value != "apple" || value != "banan") {
-    return "this value is not apple or banan";
-  }
-  return true;
-}
+const isfruit = {
+  name: "isfruit",
+  test(node) {
+    const { value } = node;
+    if (value != "apple" || value != "banan") {
+      return "this value is not apple or banan";
+    }
+    return true;
+  },
+};
 </script>
 <template>
   <u-field label="Name" :validation="['required', isfruit]"></u-field>
