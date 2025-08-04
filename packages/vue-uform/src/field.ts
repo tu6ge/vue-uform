@@ -20,6 +20,7 @@ export interface FieldProps {
 
 export type FieldNode = {
   name: string;
+  label: string;
   value: Ref<string>;
   at: (path: string) => FieldNode;
 };
@@ -70,7 +71,10 @@ export const UField = defineComponent(
       thisValue || props.modelValue || props.value || ""
     );
     const hasError = ref(false);
-    const fieldNode = createFieldNode({ name: props.name, value }, formValues);
+    const fieldNode = createFieldNode(
+      { name: props.name, label: props.label || "", value },
+      formValues
+    );
     const doValidator = () => {
       let validator_result = validatior(
         fieldNode,
@@ -161,7 +165,11 @@ export function createFieldNode(
     at(path: string): FieldNode {
       // TODO Multidimensional form fields were not considered
       let value = ref(values.value[path]);
-      return createFieldNode({ name: path, value }, values);
+      return createFieldNode(
+        // TODO label is undefinded
+        { name: path, label: "", value },
+        values
+      );
     },
   };
 }

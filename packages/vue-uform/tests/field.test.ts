@@ -241,9 +241,69 @@ test("test createFieldNode function", () => {
     password: "101010",
   });
   let field = createFieldNode(
-    { name: "username", value: ref("Foo") },
+    { name: "username", value: ref("Foo"), label: "Username" },
     formValues
   );
   expect(field.at("password").name).toBe("password");
   expect(field.at("password").value.value).toBe("101010");
+});
+
+test("test field component validation message", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const uid = ref("123");
+        return {
+          uid,
+        };
+      },
+      template: `<u-field label="FooLabel" v-model="uid" validation="required|number" v-slot="{value,update}" >
+        <input :value="value" @input="update($event.target.value)" />
+      </u-field>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  expect(wrapper.find("input").element.value).toBe("123");
+
+  await wrapper.find("input").setValue("abc");
+
+  expect(wrapper.html()).contain("<li>FooLabel must be a number</li>");
+
+  await wrapper.find("input").setValue("111");
+
+  expect(wrapper.html()).contain(`<ul class="u-validation-message"></ul>`);
+});
+
+test("test field component validation custom message", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const uid = ref("123");
+        return {
+          uid,
+        };
+      },
+      template: `<u-field label="FooLabel" v-model="uid" validation="required|number" :validation-messages="{
+        number:'the FooLabel should be a number'
+      }" v-slot="{value,update}" >
+        <input :value="value" @input="update($event.target.value)" />
+      </u-field>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  expect(wrapper.find("input").element.value).toBe("123");
+
+  await wrapper.find("input").setValue("abc");
+
+  expect(wrapper.html()).contain("<li>the FooLabel should be a number</li>");
 });
