@@ -10,5 +10,13 @@ export default defineConfig({
       // the proper extensions will be added
       fileName: "vue-uform",
     },
+    rollupOptions: {
+      external: ["vue"],
+      output: {
+        globals: {
+          vue: "Vue",
+        },
+      },
+    },
   },
 });
