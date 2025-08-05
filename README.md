@@ -1,6 +1,6 @@
 # Vue-uForm
 
-Next vue form build library. the library regards components as first-class citizens. All functions including data transfer and form validation, revolve around components. It has the following functions:
+Next vue form validator library. the library regards components as first-class citizens. All functions including data transfer and form validation, revolve around components. It has the following functions:
 
 - Support third UI componnet library's input components
 - Support custom layout, e.g. label, input, help info,validator error message and more element free combination
