@@ -3,7 +3,17 @@
   "version": "0.1.0",
   "description": "",
   "type": "module",
-  "main": "dist/vue-uform.js",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue-uform.umd.cjs",
+  "module": "./dist/vue-uform.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-uform.js",
+      "require": "./dist/vue-uform.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
