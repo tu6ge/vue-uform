@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [
     "vite-plugin-vue"
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "vite": "^7.0.6",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
   }
 }

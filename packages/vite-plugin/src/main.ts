@@ -7,6 +7,8 @@ import {
   NodeTypes,
   ElementNode,
   AttributeNode,
+  transformElement,
+  RootNode,
 } from "@vue/compiler-dom";
 import type { Plugin } from "vite";
 
@@ -16,16 +18,18 @@ export default function fModelAstPlugin(): Plugin {
     enforce: "pre",
 
     transform(code, id) {
+      //console.log("id", id);
       if (!id.endsWith(".vue")) return;
 
       const { descriptor } = parse(code);
       if (!descriptor.template) return;
 
-      const templateAst = parseDOM(descriptor.template.content);
+      const templateAst = descriptor.template.ast as RootNode;
 
       // 遍历模板 AST 节点
       transform(templateAst, {
         nodeTransforms: [
+          transformElement,
           (node) => {
             if (node.type === NodeTypes.ELEMENT) {
               const el = node as ElementNode;
@@ -95,7 +99,6 @@ export default function fModelAstPlugin(): Plugin {
         ],
       });
 
-      // 生成修改后的模板字符串
       const generated = generate(templateAst);
 
       // 拼接 script + 新模板
