@@ -17,6 +17,9 @@ importers:
 
   packages/vite-plugin:
     dependencies:
+      '@vue/compiler-dom':
+        specifier: ^3.5.18
+        version: 3.5.18
       '@vue/compiler-sfc':
         specifier: ^3.5.18
         version: 3.5.18

@@ -23,6 +23,7 @@
     "vite": "^7.0.6"
   },
   "dependencies": {
+    "@vue/compiler-dom": "^3.5.18",
     "@vue/compiler-sfc": "^3.5.18"
   },
   "devDependencies": {
