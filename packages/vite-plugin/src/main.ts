@@ -9,108 +9,99 @@ import {
   AttributeNode,
   transformElement,
   RootNode,
+  NodeTransform,
+  createSimpleExpression,
+  processExpression,
 } from "@vue/compiler-dom";
 import type { Plugin } from "vite";
+import type { ResolvedOptions } from "@vitejs/plugin-vue";
 
-export default function fModelAstPlugin(): Plugin {
+export default function fModelPlugin(options: {}): Plugin {
+  let api: VuePluginApi | null | undefined;
+
   return {
-    name: "vite-plugin-f-model-ast",
-    enforce: "pre",
-
-    transform(code, id) {
-      //console.log("id", id);
-      if (!id.endsWith(".vue")) return;
-
-      const { descriptor } = parse(code);
-      if (!descriptor.template) return;
-
-      const templateAst = descriptor.template.ast as RootNode;
-
-      // 遍历模板 AST 节点
-      transform(templateAst, {
-        nodeTransforms: [
-          transformElement,
-          (node) => {
-            if (node.type === NodeTypes.ELEMENT) {
-              const el = node as ElementNode;
-              const attrsToAdd: any[] = [];
-              const attrsToRemove: AttributeNode[] = [];
-
-              for (const attr of el.props) {
-                // 找到形如 f-model:prop@event="binding" 的属性
-                if (
-                  attr.type === NodeTypes.ATTRIBUTE &&
-                  attr.name.startsWith("f-model:")
-                ) {
-                  const match = attr.name.match(/^f-model:([^@]+)@(.+)$/);
-                  if (match && attr.value) {
-                    const [, prop, event] = match;
-                    const binding = attr.value.content;
-
-                    // 添加 :prop="binding"
-                    attrsToAdd.push({
-                      type: NodeTypes.DIRECTIVE,
-                      name: "bind",
-                      exp: {
-                        type: NodeTypes.SIMPLE_EXPRESSION,
-                        content: binding,
-                        isStatic: false,
-                      },
-                      arg: {
-                        type: NodeTypes.SIMPLE_EXPRESSION,
-                        content: prop,
-                        isStatic: true,
-                      },
-                      modifiers: [],
-                      loc: attr.loc,
-                    });
-
-                    // 添加 @event:prop="update"
-                    attrsToAdd.push({
-                      type: NodeTypes.DIRECTIVE,
-                      name: "on",
-                      exp: {
-                        type: NodeTypes.SIMPLE_EXPRESSION,
-                        content: "update",
-                        isStatic: false,
-                      },
-                      arg: {
-                        type: NodeTypes.SIMPLE_EXPRESSION,
-                        content: `${event}:${prop}`,
-                        isStatic: true,
-                      },
-                      modifiers: [],
-                      loc: attr.loc,
-                    });
-
-                    attrsToRemove.push(attr);
-                  }
-                }
-              }
-
-              // 移除原始 f-model 属性
-              el.props = el.props.filter(
-                (p) => !attrsToRemove.includes(p as AttributeNode)
-              );
-              // 添加新的指令属性
-              el.props.push(...attrsToAdd);
-            }
-          },
-        ],
-      });
-
-      const generated = generate(templateAst);
-
-      // 拼接 script + 新模板
-      const finalCode = code.replace(
-        descriptor.template.content,
-        generated.code
-      );
-
-      return {
-        code: finalCode,
-        map: null,
-      };
+    name: "vite-plugin-vue-uform",
+    configResolved(config) {
+      try {
+        api = getVuePluginApi(config.plugins);
+      } catch {}
     },
+    buildStart(rollupOpts) {
+      if (api === undefined)
+        try {
+          api = getVuePluginApi(rollupOpts.plugins);
+        } catch (error: any) {
+          this.warn(error);
+          return;
+        }
+
+      if (!api) return;
+
+      api.options.template ||= {};
+      api.options.template.compilerOptions ||= {};
+      api.options.template.compilerOptions.nodeTransforms ||= [];
+
+      api.options.template.compilerOptions.nodeTransforms.push(
+        transformFmodel(options)
+      );
+    },
+  };
+}
+
+interface VuePluginApi {
+  options: ResolvedOptions;
+  version: string;
+}
+
+const VUE_PLUGINS = ["vite:vue", "unplugin-vue"];
+
+function getVuePluginApi(
+  plugins: Readonly<Plugin[]> | undefined
+): VuePluginApi | null {
+  const vuePlugin = (plugins || []).find((p) => VUE_PLUGINS.includes(p.name));
+  if (!vuePlugin)
+    throw new Error(
+      "Cannot find Vue plugin (@vitejs/plugin-vue or unplugin-vue). Please make sure to add it before using Vue Macros."
+    );
+
+  const api = vuePlugin.api as VuePluginApi;
+  if (!api?.version) {
+    throw new Error(
+      "The Vue plugin is not supported (@vitejs/plugin-vue or unplugin-vue). Please make sure version > 4.3.4."
+    );
+  }
+
+  return api;
+}
+
+function transformFmodel(options: {}): NodeTransform {
+  return (node, context) => {
+    if (node.type !== NodeTypes.ELEMENT) return;
+    for (const [i, prop] of node.props.entries()) {
+      //console.log("prop.type", prop.type);
+      if (prop.name.startsWith("f-model")) {
+        const simpleExpression = createSimpleExpression(
+          "$setup.value",
+          false,
+          prop.loc,
+          0
+        );
+        const exp = processExpression(simpleExpression, context);
+        node.props.push({
+          type: NodeTypes.DIRECTIVE,
+          name: "bind", // event is `on`
+          exp,
+          arg: {
+            type: NodeTypes.SIMPLE_EXPRESSION,
+            content: "value",
+            isStatic: true,
+            loc: prop.loc,
+            constType: 0,
+          },
+          modifiers: [],
+          loc: prop.loc,
+        });
+      }
+    }
   };
 }
