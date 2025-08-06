@@ -1,0 +1,32 @@
+{
+  "name": "@vue-uform/vite-plugin",
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vite-plugin-vue-uform.umd.cjs",
+  "module": "./dist/vite-plugin-vue-uform.js",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite-plugin-vue"
+  ],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.13.1",
+  "peerDependencies": {
+    "vite": "^7.0.6"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.5.18"
+  },
+  "devDependencies": {
+    "vite": "^7.0.6",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

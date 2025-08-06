@@ -47,6 +47,7 @@ function isfruit(node: FieldNode): boolean | string {
 
 <template>
   <div>Welcome</div>
+  <input f-model:value@update="value"></input>
   <u-form :values="formValues" @submit="doSave">
     <u-field name="username" label="Username" :scheme="myScheme"></u-field>
     <u-field
