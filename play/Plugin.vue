@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from "vue";
-const value = ref("abc");
+const val = ref("abc");
 </script>
 <template>
   <div>
-    <input f-model:value />
-    <input :value="value" />
+    <u-field v-model="val" v-slot="{ value, update }">
+      <!-- <input :value="value" @input="update($event.target.value)" /> -->
+      <input f-model />
+    </u-field>
   </div>
 </template>
