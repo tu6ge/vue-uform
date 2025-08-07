@@ -19,6 +19,7 @@
     "vite-plugin-inspect": "^11.3.2"
   },
   "dependencies": {
+    "element-plus": "^2.10.5",
     "naive-ui": "^2.42.0",
     "vue-uform": "workspace:^"
   }
