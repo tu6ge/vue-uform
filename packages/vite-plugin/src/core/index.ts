@@ -9,6 +9,7 @@ import {
   TransformContext,
   ElementTypes,
 } from "@vue/compiler-dom";
+import { modifyInputNode } from "./input";
 
 export function transformFmodel(options: {}): NodeTransform {
   return (node, context) => {
@@ -26,50 +27,6 @@ export function transformFmodel(options: {}): NodeTransform {
       modifyComponentNode(node, prop, context);
     }
   };
-}
-
-function modifyInputNode(
-  node: ElementNode,
-  prop: AttributeNode | DirectiveNode,
-  context: TransformContext
-) {
-  const simpleExpression = createSimpleExpression("value", false, prop.loc, 0);
-  const exp = processExpression(simpleExpression, context);
-  node.props.push({
-    type: NodeTypes.DIRECTIVE,
-    name: "bind",
-    exp,
-    arg: {
-      type: NodeTypes.SIMPLE_EXPRESSION,
-      content: "value",
-      isStatic: true,
-      loc: prop.loc,
-      constType: 0,
-    },
-    modifiers: [],
-    loc: prop.loc,
-  });
-
-  const exp2 = createSimpleExpression(
-    "$event => update($event.target.value)",
-    false,
-    prop.loc,
-    0
-  );
-  node.props.push({
-    type: NodeTypes.DIRECTIVE,
-    name: "on",
-    exp: exp2,
-    arg: {
-      type: NodeTypes.SIMPLE_EXPRESSION,
-      content: "input",
-      isStatic: true,
-      loc: prop.loc,
-      constType: 0,
-    },
-    modifiers: [],
-    loc: prop.loc,
-  });
 }
 
 function modifyComponentNode(

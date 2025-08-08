@@ -40,4 +40,20 @@ describe("field", () => {
     expect(sugar.code).toBe(original.code);
     //expect((sugar.ast as any).children[0].props[0]).matchSnapshot();
   });
+
+  test("radio input", () => {
+    const original = compile(
+      `<input type="radio" value="foo" :checked='value == "foo"' @change='$event => (update("foo"))' />`
+    );
+    const sugar = compile(`<input type="radio" value="foo" f-model />`);
+    expect(sugar.code).toBe(original.code);
+  });
+
+  test("radio input not value", () => {
+    const original = compile(
+      `<input type="radio" :checked='value == ""' @change='$event => (update(""))' />`
+    );
+    const sugar = compile(`<input type="radio" f-model />`);
+    expect(sugar.code).toBe(original.code);
+  });
 });
