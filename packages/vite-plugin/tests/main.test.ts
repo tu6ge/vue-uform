@@ -13,12 +13,30 @@ function compile(code: string) {
   });
 }
 
-describe("name", () => {
-  test("default name", () => {
+describe("field", () => {
+  test("default input", () => {
     const original = compile(
       `<input :value="value" @input="$event => update($event.target.value)" />`
     );
     const sugar = compile(`<input f-model />`);
+    expect(sugar.code).toBe(original.code);
+    //expect((sugar.ast as any).children[0].props[0]).matchSnapshot();
+  });
+
+  test("component input", () => {
+    const original = compile(
+      `<n-input :modelValue="value" @update:modelValue="$event => update($event)" ></n-input>`
+    );
+    const sugar = compile(`<n-input f-model ></n-input>`);
+    expect(sugar.code).toBe(original.code);
+    //expect((sugar.ast as any).children[0].props[0]).matchSnapshot();
+  });
+
+  test("component input v-model:value", () => {
+    const original = compile(
+      `<n-input :value="value" @update:value="$event => update($event)" ></n-input>`
+    );
+    const sugar = compile(`<n-input f-model:value ></n-input>`);
     expect(sugar.code).toBe(original.code);
     //expect((sugar.ast as any).children[0].props[0]).matchSnapshot();
   });
