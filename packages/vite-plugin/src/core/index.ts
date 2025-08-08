@@ -50,13 +50,12 @@ function modifyInputNode(
     loc: prop.loc,
   });
 
-  const simpleExpression2 = createSimpleExpression(
-    "$event => (update($event.target.value))",
+  const exp2 = createSimpleExpression(
+    "$event => update($event.target.value)",
     false,
     prop.loc,
     0
   );
-  const exp2 = processExpression(simpleExpression2, context);
   node.props.push({
     type: NodeTypes.DIRECTIVE,
     name: "on",
@@ -104,13 +103,12 @@ function modifyComponentNode(
     loc: prop.loc,
   });
 
-  const simpleExpression2 = createSimpleExpression(
-    "$event => (update($event))",
+  const exp2 = createSimpleExpression(
+    "$event => update($event)",
     false,
     prop.loc,
     0
   );
-  const exp2 = processExpression(simpleExpression2, context);
   node.props.push({
     type: NodeTypes.DIRECTIVE,
     name: "on",

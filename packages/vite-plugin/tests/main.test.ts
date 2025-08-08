@@ -16,10 +16,10 @@ function compile(code: string) {
 describe("name", () => {
   test("default name", () => {
     const original = compile(
-      `<input :value="value" @input="($event)=>update($event.target.value)" />`
+      `<input :value="value" @input="$event => update($event.target.value)" />`
     );
     const sugar = compile(`<input f-model />`);
-    // expect(sugar.code).toBe(original.code);
-    // expect((sugar.ast as any).children[0].props[0]).matchSnapshot();
+    expect(sugar.code).toBe(original.code);
+    //expect((sugar.ast as any).children[0].props[0]).matchSnapshot();
   });
 });
