@@ -161,7 +161,7 @@ export const UField = defineComponent(
       label: String,
       help: String,
       value: String,
-      modelValue: [String, Boolean, Array],
+      modelValue: [String, Boolean, Array, Number],
       scheme: Function as PropType<(arg: SchemeArg) => VNode>,
       custom: Boolean,
       validation: {
