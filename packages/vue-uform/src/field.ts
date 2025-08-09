@@ -78,9 +78,6 @@ export const UField = defineComponent(
           : undefined;
       },
     };
-    if (props.scheme) {
-      return () => props.scheme(schemeArg);
-    }
 
     const value = ref<unknown>(
       thisValue || props.modelValue || props.value || undefined
@@ -144,6 +141,10 @@ export const UField = defineComponent(
               messages: validationMessages.value,
             })
           : "";
+    }
+
+    if (props.scheme) {
+      return () => props.scheme(schemeArg);
     }
 
     return () =>
