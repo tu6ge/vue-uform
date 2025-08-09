@@ -1,10 +1,10 @@
 import type { App } from "vue";
-import { UField } from "./field";
+import { FieldNode, UField } from "./field";
 import { SchemeArg } from "./field-scheme";
 import { UForm } from "./form";
 import { USubmit } from "./submit";
 
-export type { SchemeArg };
+export type { SchemeArg, FieldNode };
 
 export const plugin = {
   install(app: App, option: any) {

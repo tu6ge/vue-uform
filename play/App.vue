@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { h, ref } from "vue";
-import { SchemeArg } from "vue-uform";
+import { SchemeArg, FieldNode } from "vue-uform";
 import { NInput, NButton } from "naive-ui";
-import { FieldNode } from "packages/vue-uform/src/field";
 
 const myScheme = (arg: SchemeArg) => {
   return h(
