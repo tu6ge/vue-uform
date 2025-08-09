@@ -59,26 +59,6 @@ export const UField = defineComponent(
 
     const validationMessages = ref<string[]>([]);
 
-    let schemeArg: SchemeArg = {
-      name: props.name,
-      label: props.label,
-      value: props.value || "",
-      valueRef: ref(thisValue || props.modelValue || props.value || undefined),
-      help: props.help,
-      getSlots: () => {
-        return ctx.slots.default
-          ? ctx.slots.default({
-              value: schemeArg.valueRef.value,
-              update: (val: string) => {
-                schemeArg.valueRef.value = val;
-                ctx.emit("update:modelValue", val);
-                formUpdate && formUpdate(props.name, val);
-              },
-            })
-          : undefined;
-      },
-    };
-
     const value = ref<unknown>(
       thisValue || props.modelValue || props.value || undefined
     );
@@ -144,6 +124,46 @@ export const UField = defineComponent(
     }
 
     if (props.scheme) {
+      let schemeArg: SchemeArg = {
+        name: props.name,
+        label: props.label,
+        value: props.value || "",
+        valueRef: value,
+        help: props.help,
+        hasError,
+        messages: validationMessages,
+        getSlots: () => {
+          return ctx.slots.default
+            ? ctx.slots.default({
+                value: value.value,
+                update: (val: unknown, type: FieldUpdateType = "primitive") => {
+                  if (type == "primitive") {
+                    value.value = val;
+                  } else if (type == "array") {
+                    if (Array.isArray(value.value)) {
+                      const existIndex = value.value.findIndex(
+                        (res) => res == val
+                      );
+                      if (existIndex > -1) {
+                        value.value.splice(existIndex, 1);
+                      } else {
+                        value.value.push(val);
+                      }
+                    } else {
+                      throw new Error(
+                        'update type is "array",the value except is an array type'
+                      );
+                    }
+                  }
+
+                  ctx.emit("update:modelValue", value.value);
+                  formUpdate && formUpdate(props.name, value.value);
+                  doValidator();
+                },
+              })
+            : undefined;
+        },
+      };
       return () => props.scheme(schemeArg);
     }
 

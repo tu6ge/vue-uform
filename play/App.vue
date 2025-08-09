@@ -19,7 +19,12 @@ const myScheme2 = (arg: SchemeArg) => {
     {
       style: { color: "green" },
     },
-    [h("label", arg.label), arg.getSlots(), h("div", arg.valueRef.value)]
+    [
+      h("label", arg.label),
+      arg.getSlots(),
+      h("div", arg.valueRef.value),
+      h("div", JSON.stringify(arg.messages.value)),
+    ]
   );
 };
 
@@ -49,9 +54,10 @@ function isfruit(node: FieldNode): boolean | string {
   <u-form :values="formValues" @submit="doSave">
     <u-field name="username" label="Username" :scheme="myScheme"></u-field>
     <u-field
-      name="username"
+      name="username22"
       label="Scheme2"
       :scheme="myScheme2"
+      validation="required"
       v-slot="{ value, update }"
       value="hello"
     >

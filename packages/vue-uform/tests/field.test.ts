@@ -194,6 +194,65 @@ test("test field component custom scheme", async () => {
   expect(wrapper.find(".real-value").text()).toBe("new value");
 });
 
+test("test field component custom scheme and validator", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const myScheme = (arg: SchemeArg) => {
+          return h(
+            "div",
+            {
+              style: { color: "green" },
+            },
+            [
+              h("label", arg.label),
+              arg.getSlots(),
+              h(
+                "div",
+                { class: "my-message" },
+                arg.messages.value.length > 0 ? arg.messages.value[0] : ""
+              ),
+            ]
+          );
+        };
+        const result = ref({});
+        const save = (val: {}) => {
+          result.value = val;
+        };
+        return {
+          myScheme,
+          save,
+          result,
+        };
+      },
+      template: `
+        <u-form @submit="save">
+          <u-field :scheme="myScheme" name="username" label="Username" validation="required" v-slot="{value,update}" >
+            <input :value="value" @input="update($event.target.value)" />
+          </u-field>
+          <u-submit>Save</u-submit>
+        </u-form>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  await wrapper.find("button").trigger("click");
+
+  expect(wrapper.find(".my-message").text()).toBe("Username is required");
+
+  expect(wrapper.vm.result).toEqual({});
+
+  wrapper.find("input").setValue("foo");
+
+  await wrapper.find("button").trigger("click");
+
+  expect(wrapper.vm.result).toEqual({ username: "foo" });
+});
+
 test("test field component custom scheme v-model", async () => {
   const wrapper = mount(
     {
