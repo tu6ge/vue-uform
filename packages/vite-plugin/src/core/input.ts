@@ -26,6 +26,9 @@ export function modifyInputNode(
       case "checkbox":
         modifyCheckBoxNode(node, prop, context);
         break;
+      default:
+        // support tel/email/password.. input type
+        modifyInputTextNode(node, prop, context);
     }
   }
 }
@@ -185,7 +188,7 @@ function modifyRadioNode(
   });
 }
 
-function modifyInputTextNode(
+export function modifyInputTextNode(
   node: ElementNode,
   prop: AttributeNode | DirectiveNode,
   context: TransformContext

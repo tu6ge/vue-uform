@@ -24,15 +24,7 @@ const options = [
   },
 ];
 
-const val4 = ref([]);
-function createOptions() {
-  return Array.from({ length: 100 }).map((v, i) => ({
-    label: `Option ${i}`,
-    value: i,
-    disabled: i % 5 === 0,
-  }));
-}
-const options4 = createOptions();
+const val4 = ref("content");
 </script>
 <template>
   <div>
@@ -48,7 +40,8 @@ const options4 = createOptions();
 
     val4: {{ val4 }}
     <u-field v-model="val4" v-slot="{ value, update }">
-      <n-transfer f-model:value :options="options4" />
+      <textarea f-model></textarea>
+      <input type="tel" f-model />
     </u-field>
   </div>
 </template>
