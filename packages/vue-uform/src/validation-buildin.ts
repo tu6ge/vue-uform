@@ -17,7 +17,7 @@ const validationList: ValidationList = {
   },
   number: {
     validator({ value }: FieldNode): string | boolean {
-      if (/^[0-9\.eE]+$/.test(value.value)) {
+      if (/^[0-9\.eE]+$/.test(value.value as string)) {
         return true;
       }
       return false;
