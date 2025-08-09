@@ -1,9 +1,7 @@
 import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
-import { plugin, SchemeArg } from "../src/main";
-import { h, Ref, ref } from "vue";
-import { FormValues } from "../src/form";
-import { createFieldNode, FieldNode } from "../src/field";
+import { plugin } from "../src/main";
+import { ref } from "vue";
 
 test("test field checkbox only one", async () => {
   const wrapper = mount(
