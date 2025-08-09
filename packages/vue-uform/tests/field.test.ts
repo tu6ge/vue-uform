@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import { plugin, SchemeArg } from "../src/main";
 import { h, Ref, ref } from "vue";
-import { FormValues } from "../src/form";
+import { FormValues, initFormValues } from "../src/form";
 import { createFieldNode, FieldNode } from "../src/field";
 
 test("test field component class names", () => {
@@ -164,7 +164,7 @@ test("test field component custom scheme", async () => {
             [
               h("label", arg.label),
               arg.getSlots(),
-              h("div", { class: "real-value" }, arg.valueRef.value),
+              h("div", { class: "real-value" }, arg.valueRef.value as string),
             ]
           );
         };
@@ -236,7 +236,7 @@ test("test field component custom scheme v-model", async () => {
 });
 
 test("test createFieldNode function", () => {
-  let formValues: Ref<FormValues> = ref({
+  let formValues: Ref<FormValues> = initFormValues({
     username: "Join",
     password: "101010",
   });

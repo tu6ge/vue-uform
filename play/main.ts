@@ -6,6 +6,6 @@ import MySelect from "./MySelect.vue";
 
 import { plugin } from "vue-uform";
 
-const app = createApp(Plugin);
+const app = createApp(App);
 
 app.use(plugin, {}).mount("#app");

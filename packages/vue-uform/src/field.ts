@@ -9,7 +9,14 @@ import {
   PropType,
 } from "vue";
 import { SchemeArg } from "./field-scheme";
-import { FormValues } from "./form";
+import {
+  FormValues,
+  FormValueProvideKey,
+  FormUpdateLabelProvideKey,
+  FormUpdateValueProvideKey,
+  FormUpdateValidatorProvideKey,
+  FormSubmitUseidProvideKey,
+} from "./form";
 import { validatior } from "./validation";
 
 export interface FieldProps {
@@ -28,20 +35,27 @@ type FieldUpdateType = "primitive" | "array";
 
 export const UField = defineComponent(
   (props, ctx) => {
-    const formValues = inject<Ref<FormValues>>("u-form-values", ref({}));
+    const formValues = inject<Ref<FormValues>>(FormValueProvideKey, ref({}));
 
-    let thisValue = formValues.value[props.name];
+    let thisValue = getThisValueFromForm(formValues, props.name);
 
-    const formUpdate = inject("u-form-update", undefined as unknown) as (
-      key: string,
-      value: unknown
-    ) => void;
+    const formUpdateLabel = inject(
+      FormUpdateLabelProvideKey,
+      undefined as unknown
+    ) as (key: string, label: string) => void;
+
+    const formUpdate = inject(
+      FormUpdateValueProvideKey,
+      undefined as unknown
+    ) as (key: string, value: unknown) => void;
     const formUpdateValidator = inject(
-      "u-form-update-validator",
+      FormUpdateValidatorProvideKey,
       undefined as unknown
     ) as (key: string, value: boolean) => void;
 
-    const isSubmitUseid = inject("u-form-do-submit-useid", ref("0"));
+    formUpdateLabel && formUpdateLabel(props.name, props.label || "");
+
+    const isSubmitUseid = inject(FormSubmitUseidProvideKey, ref<Symbol>());
 
     const validationMessages = ref<string[]>([]);
 
@@ -183,12 +197,18 @@ export function createFieldNode(
     ...node,
     at(path: string): FieldNode {
       // TODO Multidimensional form fields were not considered
-      let value = ref(values.value[path]);
+      let value = ref(values.value[path].value);
       return createFieldNode(
-        // TODO label is undefinded
-        { name: path, label: "", value },
+        { name: path, label: values.value[path].label, value },
         values
       );
     },
   };
+}
+
+function getThisValueFromForm(values: Ref<FormValues>, name: string): unknown {
+  if (name in values.value) {
+    return values.value[name].value;
+  }
+  return undefined;
 }

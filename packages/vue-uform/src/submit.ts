@@ -1,8 +1,9 @@
 import { defineComponent, h, inject } from "vue";
+import { FormSubmitProvideKey } from "./form";
 
 export const USubmit = defineComponent(
   (props, ctx) => {
-    const submit = inject("u-form-submit") as () => void;
+    const submit = inject(FormSubmitProvideKey) as () => void;
 
     if (props.custom) {
       return () =>
