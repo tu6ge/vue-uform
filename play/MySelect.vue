@@ -16,6 +16,15 @@ const val2 = ref(["A", "B"]);
       </select>
     </u-field>
 
+    <u-field v-model="val1" v-slot="{ value, update }">
+      <select f-model>
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+    </u-field>
+
     val2: {{ JSON.stringify(val2) }}
     <u-field v-model="val2" v-slot="{ value, update }">
       <select
@@ -32,6 +41,15 @@ const val2 = ref(["A", "B"]);
         <option :selected="value.find((res) => res == 'A')">A</option>
         <option :selected="value.find((res) => res == 'B')">B</option>
         <option :selected="value.find((res) => res == 'C')">C</option>
+      </select>
+    </u-field>
+
+    <u-field v-model="val2" v-slot="{ value, update }">
+      <select f-model multiple>
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
       </select>
     </u-field>
   </div>

@@ -6,6 +6,6 @@ import MySelect from "./MySelect.vue";
 
 import { plugin } from "vue-uform";
 
-const app = createApp(Checkbox2);
+const app = createApp(MySelect);
 
 app.use(plugin, {}).mount("#app");

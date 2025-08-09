@@ -25,6 +25,7 @@ export function modifyInputNode(
         break;
       case "checkbox":
         modifyCheckBoxNode(node, prop, context);
+        break;
     }
   }
 }

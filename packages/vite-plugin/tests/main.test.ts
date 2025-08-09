@@ -65,7 +65,7 @@ describe("field", () => {
     expect(sugar.code).toBe(original.code);
   });
 
-  test("radio checkbox has value", () => {
+  test("checkbox has value", () => {
     const original = compile(
       `<input type="checkbox" value="foo1" 
       :checked='value.find((res) => res == "foo1") != undefined' 
@@ -73,6 +73,49 @@ describe("field", () => {
       />`
     );
     const sugar = compile(`<input type="checkbox" value="foo1" f-model />`);
+    expect(sugar.code).toBe(original.code);
+  });
+
+  test("select only one value", () => {
+    const original = compile(
+      `<select :value="value" @change="update($event.target.value)">
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>`
+    );
+    const sugar = compile(`<select f-model>
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>`);
+    expect(sugar.code).toBe(original.code);
+  });
+
+  test("select multiple value", () => {
+    const original = compile(
+      `<select
+      multiple
+          @change="update(
+      Array.from($event.target.selectedOptions).map(
+        (option) => option.value
+      )
+    )"
+        >
+          <option disabled value="" :selected="value.find((res) => res == '')">Please select one</option>
+          <option :selected="value.find((res) => res == 'A')">A</option>
+          <option :selected="value.find((res) => res == 'B')">B</option>
+          <option :selected="value.find((res) => res == 'C')">C</option>
+        </select>`
+    );
+    const sugar = compile(`<select f-model multiple>
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>`);
     expect(sugar.code).toBe(original.code);
   });
 });

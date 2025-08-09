@@ -10,6 +10,7 @@ import {
   ElementTypes,
 } from "@vue/compiler-dom";
 import { modifyInputNode } from "./input";
+import { modifySelectNode } from "./select";
 
 export function transformFmodel(options: {}): NodeTransform {
   return (node, context) => {
@@ -23,6 +24,8 @@ export function transformFmodel(options: {}): NodeTransform {
 
     if (node.tag == "input") {
       modifyInputNode(node, prop, context);
+    } else if (node.tag == "select") {
+      modifySelectNode(node, prop, context);
     } else if (node.tagType == ElementTypes.COMPONENT) {
       modifyComponentNode(node, prop, context);
     }
