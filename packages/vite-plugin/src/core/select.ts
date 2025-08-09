@@ -85,7 +85,7 @@ function modifyMultipleSelectNode(
         (res) => res.type == NodeTypes.TEXT
       );
       if (optionContent) {
-        value = optionContent.content;
+        value = (optionContent as { content: string }).content;
       }
     }
 
