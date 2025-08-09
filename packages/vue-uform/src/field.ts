@@ -24,6 +24,7 @@ export type FieldNode = {
   value: Ref<unknown>;
   at: (path: string) => FieldNode;
 };
+type FieldUpdateType = "primitive" | "array";
 
 export const UField = defineComponent(
   (props, ctx) => {
@@ -95,10 +96,26 @@ export const UField = defineComponent(
     watch(isSubmitUseid, () => {
       doValidator();
     });
-    const update = (val: unknown) => {
-      value.value = val;
-      ctx.emit("update:modelValue", val);
-      formUpdate && formUpdate(props.name, val);
+    const update = (val: unknown, type: FieldUpdateType = "primitive") => {
+      if (type == "primitive") {
+        value.value = val;
+      } else if (type == "array") {
+        if (Array.isArray(value.value)) {
+          const existIndex = value.value.findIndex((res) => res == val);
+          if (existIndex > -1) {
+            value.value.splice(existIndex, 1);
+          } else {
+            value.value.push(val);
+          }
+        } else {
+          throw new Error(
+            'update type is "array",the value except is an array type'
+          );
+        }
+      }
+
+      ctx.emit("update:modelValue", value.value);
+      formUpdate && formUpdate(props.name, value.value);
 
       doValidator();
     };
@@ -144,7 +161,7 @@ export const UField = defineComponent(
       label: String,
       help: String,
       value: String,
-      modelValue: String,
+      modelValue: [String, Boolean, Array],
       scheme: Function as PropType<(arg: SchemeArg) => VNode>,
       custom: Boolean,
       validation: {
