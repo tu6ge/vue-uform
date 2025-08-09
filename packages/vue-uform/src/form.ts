@@ -1,4 +1,15 @@
-import { defineComponent, h, nextTick, provide, Ref, ref, unref } from "vue";
+import {
+  defineComponent,
+  h,
+  nextTick,
+  PropType,
+  provide,
+  Ref,
+  ref,
+  unref,
+  VNode,
+} from "vue";
+import { SchemeArg } from "./field-scheme";
 
 export type FormValues = {
   [key: string]: {
@@ -16,6 +27,7 @@ export const FormUpdateValueProvideKey = Symbol("u-form-update-value");
 export const FormUpdateValidatorProvideKey = Symbol("u-form-update-validator");
 export const FormSubmitProvideKey = Symbol("u-form-submit");
 export const FormSubmitUseidProvideKey = Symbol("u-form-submit-useid");
+export const FormSchemeKey = Symbol("form-scheme");
 
 export const UForm = defineComponent(
   (props, ctx) => {
@@ -64,6 +76,11 @@ export const UForm = defineComponent(
       }
       ctx.emit("submit", getSubmitValues(unref(thisValues.value)));
     });
+
+    if (props.scheme) {
+      provide(FormSchemeKey, props.scheme);
+    }
+
     return () =>
       h("form", { class: "u-form" }, [
         ctx.slots.default ? ctx.slots.default() : "",
@@ -72,6 +89,7 @@ export const UForm = defineComponent(
   {
     props: {
       values: Object,
+      scheme: Function as PropType<(arg: SchemeArg) => VNode>,
     },
     emits: ["submit"],
   }

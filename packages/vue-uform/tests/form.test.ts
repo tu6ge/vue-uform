@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
-import { plugin } from "../src/main";
-import { ref } from "vue";
+import { plugin, SchemeArg } from "../src/main";
+import { h, ref } from "vue";
 
 test("test form component values props", async () => {
   const wrapper = mount(
@@ -108,4 +108,50 @@ test("test form component validation error", async () => {
   await wrapper.find("button").trigger("click");
 
   expect(Object.values(wrapper.vm.result).length).toBe(0);
+});
+
+test("test form component custom scheme", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const myScheme = (arg: SchemeArg) => {
+          return h(
+            "div",
+            {
+              style: { color: "green" },
+            },
+            [
+              h("label", arg.label),
+              arg.getSlots(),
+              h("div", { class: "real-value" }, arg.valueRef.value as string),
+            ]
+          );
+        };
+        return {
+          myScheme,
+        };
+      },
+      template: `
+      <u-form :scheme="myScheme">
+        <u-field label="FooLabel" value="init value" v-slot="{value,update}" >
+          <input :value="value" @input="update($event.target.value)" />
+        </u-field>
+        <u-field label="FooLabel2" value="init value2" v-slot="{value,update}" >
+          <input :value="value" @input="update($event.target.value)" />
+        </u-field>
+      </u-form>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  expect(wrapper.html()).toContain(
+    `<div style="color: green;"><label>FooLabel</label>`
+  );
+  expect(wrapper.html()).toContain(
+    `<div style="color: green;"><label>FooLabel2</label>`
+  );
 });

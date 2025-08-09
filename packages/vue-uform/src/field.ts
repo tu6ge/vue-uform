@@ -16,6 +16,7 @@ import {
   FormUpdateValueProvideKey,
   FormUpdateValidatorProvideKey,
   FormSubmitUseidProvideKey,
+  FormSchemeKey,
 } from "./form";
 import { validatior } from "./validation";
 
@@ -123,7 +124,11 @@ export const UField = defineComponent(
           : "";
     }
 
-    if (props.scheme) {
+    const formScheme = inject(FormSchemeKey, undefined as unknown) as (
+      arg: SchemeArg
+    ) => VNode;
+
+    if (props.scheme || formScheme) {
       let schemeArg: SchemeArg = {
         name: props.name,
         label: props.label,
@@ -164,7 +169,12 @@ export const UField = defineComponent(
             : undefined;
         },
       };
-      return () => props.scheme(schemeArg);
+
+      if (props.scheme) {
+        return () => props.scheme(schemeArg);
+      } else if (formScheme) {
+        return () => formScheme(schemeArg);
+      }
     }
 
     return () =>
