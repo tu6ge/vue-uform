@@ -13,6 +13,9 @@ const val2 = ref<Array<string>>(["foo1", "foo2"]);
         @change="update($event.target.checked)"
       />
     </u-field>
+    <u-field v-model="val1" v-slot="{ value, update }">
+      <input type="checkbox" f-model />
+    </u-field>
 
     val2 :{{ JSON.stringify(val2) }}
     <u-field v-model="val2" v-slot="{ value, update }">
@@ -28,6 +31,11 @@ const val2 = ref<Array<string>>(["foo1", "foo2"]);
         value="foo2"
         @change="update('foo2', 'array')"
       />
+    </u-field>
+
+    <u-field v-model="val2" v-slot="{ value, update }">
+      <input type="checkbox" f-model value="foo1" />
+      <input type="checkbox" f-model value="foo2" />
     </u-field>
   </div>
 </template>

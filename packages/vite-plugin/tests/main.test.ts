@@ -56,4 +56,23 @@ describe("field", () => {
     const sugar = compile(`<input type="radio" f-model />`);
     expect(sugar.code).toBe(original.code);
   });
+
+  test("radio checkbox not value", () => {
+    const original = compile(
+      `<input type="checkbox" :checked='value' @change='$event => (update($event.target.checked))' />`
+    );
+    const sugar = compile(`<input type="checkbox" f-model />`);
+    expect(sugar.code).toBe(original.code);
+  });
+
+  test("radio checkbox has value", () => {
+    const original = compile(
+      `<input type="checkbox" value="foo1" 
+      :checked='value.find((res) => res == "foo1") != undefined' 
+      @change='$event => (update("foo1","array"))' 
+      />`
+    );
+    const sugar = compile(`<input type="checkbox" value="foo1" f-model />`);
+    expect(sugar.code).toBe(original.code);
+  });
 });
