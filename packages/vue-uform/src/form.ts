@@ -1,7 +1,7 @@
 import { defineComponent, h, nextTick, provide, ref, unref, useId } from "vue";
 
 export type FormValues = {
-  [key: string]: any;
+  [key: string]: unknown;
 };
 export type FormValidatorResult = {
   [key: string]: boolean;

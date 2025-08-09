@@ -21,7 +21,7 @@ export interface FieldProps {
 export type FieldNode = {
   name: string;
   label: string;
-  value: Ref<string>;
+  value: Ref<unknown>;
   at: (path: string) => FieldNode;
 };
 
@@ -33,7 +33,7 @@ export const UField = defineComponent(
 
     const formUpdate = inject("u-form-update", undefined as unknown) as (
       key: string,
-      value: string
+      value: unknown
     ) => void;
     const formUpdateValidator = inject(
       "u-form-update-validator",
@@ -48,7 +48,7 @@ export const UField = defineComponent(
       name: props.name,
       label: props.label,
       value: props.value || "",
-      valueRef: ref(thisValue || props.modelValue || props.value || ""),
+      valueRef: ref(thisValue || props.modelValue || props.value || undefined),
       help: props.help,
       getSlots: () => {
         return ctx.slots.default
@@ -67,8 +67,8 @@ export const UField = defineComponent(
       return () => props.scheme(schemeArg);
     }
 
-    const value = ref<string>(
-      thisValue || props.modelValue || props.value || ""
+    const value = ref<unknown>(
+      thisValue || props.modelValue || props.value || undefined
     );
     const hasError = ref(false);
     const fieldNode = createFieldNode(
@@ -95,7 +95,7 @@ export const UField = defineComponent(
     watch(isSubmitUseid, () => {
       doValidator();
     });
-    const update = (val: string) => {
+    const update = (val: unknown) => {
       value.value = val;
       ctx.emit("update:modelValue", val);
       formUpdate && formUpdate(props.name, val);
@@ -160,7 +160,7 @@ export const UField = defineComponent(
 
 export function createFieldNode(
   node: Omit<FieldNode, "at">,
-  values: FormValues
+  values: Ref<FormValues>
 ): FieldNode {
   return {
     ...node,
