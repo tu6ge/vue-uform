@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "main": "./dist/vue-uform.umd.cjs",
   "module": "./dist/vue-uform.js",
