@@ -17,6 +17,8 @@ import {
   FormUpdateValidatorProvideKey,
   FormSubmitUseidProvideKey,
   FormSchemeKey,
+  FormResetUseid,
+  FormResetValue,
 } from "./form";
 import { validatior } from "./validation";
 
@@ -88,6 +90,19 @@ export const UField = defineComponent(
     watch(isSubmitUseid, () => {
       doValidator();
     });
+
+    const formResetUseid = inject(FormResetUseid, ref<Symbol>());
+    watch(formResetUseid, () => {
+      hasError.value = false;
+      validationMessages.value = [];
+      if (props.name in formValues.value) {
+        const item = formValues.value[props.name];
+        value.value = item.value;
+      } else {
+        value.value = "";
+      }
+    });
+
     const update = (val: unknown, type: FieldUpdateType = "primitive") => {
       if (type == "primitive") {
         value.value = val;

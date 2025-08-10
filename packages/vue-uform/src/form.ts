@@ -28,6 +28,9 @@ export const FormUpdateValidatorProvideKey = Symbol("u-form-update-validator");
 export const FormSubmitProvideKey = Symbol("u-form-submit");
 export const FormSubmitUseidProvideKey = Symbol("u-form-submit-useid");
 export const FormSchemeKey = Symbol("form-scheme");
+export const FormResetUseid = Symbol("form-reset-useid");
+export const FormResetValue = Symbol("form-reset");
+export const FormResetButton = Symbol("form-reset-button");
 
 export const UForm = defineComponent(
   (props, ctx) => {
@@ -80,6 +83,24 @@ export const UForm = defineComponent(
     if (props.scheme) {
       provide(FormSchemeKey, props.scheme);
     }
+
+    const resetUseid = ref<Symbol>();
+    provide(FormResetUseid, resetUseid);
+    provide(FormResetButton, (data: { [name: string]: unknown } = {}) => {
+      reset(data);
+    });
+    function reset(data: { [name: string]: unknown } = {}) {
+      for (let key in thisValues.value) {
+        let value: unknown = "";
+        if (key in data) {
+          value = data[key];
+        }
+        thisValues.value[key].value = value;
+      }
+      thisValidatorResult.value = {};
+      resetUseid.value = Symbol("reset-useid");
+    }
+    ctx.expose({ reset });
 
     return () =>
       h("form", { class: "u-form" }, [

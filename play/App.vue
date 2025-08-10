@@ -47,11 +47,15 @@ function isfruit(node: FieldNode): boolean | string {
   }
   return true;
 }
+const formRef = ref();
+function handlerReset() {
+  formRef.value.reset({ username22: "resetValue22" });
+}
 </script>
 
 <template>
   <div>Welcome</div>
-  <u-form :values="formValues" @submit="doSave">
+  <u-form :values="formValues" @submit="doSave" ref="formRef">
     <u-field name="username" label="Username" :scheme="myScheme"></u-field>
     <u-field
       name="username22"
@@ -160,5 +164,8 @@ function isfruit(node: FieldNode): boolean | string {
     <u-submit custom v-slot="{ submit }">
       <n-button @click="submit">Submit</n-button>
     </u-submit>
+    <button type="button" @click="handlerReset">Reset</button>
+
+    <u-reset></u-reset>
   </u-form>
 </template>
