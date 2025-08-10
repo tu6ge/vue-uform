@@ -100,3 +100,5 @@ const myScheme = (arg: SchemeArg) => {
 ```
 
 you can using [`h`](https://vuejs.org/guide/extras/render-function.html) function freely combine elements
+
+the `f-model` is a sugar like `v-model`, this usage is [here](./packages/vite-plugin/README.md).
