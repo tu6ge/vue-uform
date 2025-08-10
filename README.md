@@ -9,9 +9,30 @@ Next vue form validator library. the library regards components as first-class c
 - There's no need to write too much js/ts code; most of the logic is on the components
 - Support some build-in validator rule
 
-## Example
+This is a [introduction information](./introduction.md)
 
-1. simple example:
+## Usage
+
+1. install
+
+```bash
+pnpm install vue-uform
+pnpm install @vue-uform/vite-plugin -D
+```
+
+2. configure vite like this:
+
+```ts
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import uForm from "@vue-uform/vite-plugin";
+
+export default defineConfig({
+  plugins: [vue(), uForm()],
+});
+```
+
+3. open a vue sfc file, and input this code:
 
 ```vue
 <script setup>
@@ -39,66 +60,3 @@ function doLogin(data) {
   </u-form>
 </template>
 ```
-
-As you can see, our library does not contain any styles.This means that you can freely combine div elements and styles, we not have build-in every input components. you should to be use arbitrary input element or third input components.
-
-To achieve functions such as form validation, we should not only have the input element but also information like label, help, and validation message. on default, my `<u-field>` component structure is:
-
-```html
-<div class="u-field-wrap">
-  <div class="u-field-input-wrap">
-    <label class="u-label">MyLabel</label>
-    <!-- input slot -->
-  </div>
-  <div class="u-field-help">My help info</div>
-  <ul class="u-validation-message">
-    <li>validation1 error</li>
-    <!-- more validation error-->
-  </ul>
-</div>
-```
-
-You can add styles on this basis to customize your page. Not just that, you can customize this element structure like this:
-
-```vue
-<template>
-  <u-field v-slot="{ value, update }" custom>
-    <div class="my-input-wrap">
-      <label>MyLabel</label>
-      <input f-model />
-    </div>
-  </u-field>
-</template>
-```
-
-Perhaps, you need to set all the fields in a form to the same structure, and this library can also meet your needs:
-
-```vue
-<script setup lang="ts">
-import { h } from "vue";
-import { SchemeArg } from "vue-uform";
-const myScheme = (arg: SchemeArg) => {
-  return h(
-    "div",
-    {
-      style: { color: "green" },
-    },
-    [h("label", arg.label), arg.slot(), h("div", arg.help)]
-  );
-};
-</script>
-<template>
-  <u-form :scheme="myScheme">
-    <u-field name="username" label="Username" v-slot="{ value, update }">
-      <input f-model />
-    </u-field>
-    <u-field name="password" label="Password" v-slot="{ value, update }">
-      <input type="password" f-model />
-    </u-field>
-  </u-form>
-</template>
-```
-
-you can using [`h`](https://vuejs.org/guide/extras/render-function.html) function freely combine elements
-
-the `f-model` is a sugar like `v-model`, this usage is [here](./packages/vite-plugin/README.md).
