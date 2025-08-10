@@ -1,5 +1,8 @@
 # Vue-uForm
 
+This library is an abstraction of forms, which includes not only basic data initialization, submission,
+and data reset, but also a set of data validation mechanisms
+
 simple example:
 
 ```vue
@@ -14,10 +17,20 @@ function doLogin(data) {
 </script>
 <template>
   <u-form :values="formValues" @submit="doLogin">
-    <u-field name="username" label="Username" v-slot="{ value, update }">
+    <u-field
+      name="username"
+      label="Username"
+      validation="required"
+      v-slot="{ value, update }"
+    >
       <input f-model />
     </u-field>
-    <u-field name="password" label="Password" v-slot="{ value, update }">
+    <u-field
+      name="password"
+      label="Password"
+      validation="required"
+      v-slot="{ value, update }"
+    >
       <input type="password" f-model />
     </u-field>
     <u-submit>Login</u-submit>
