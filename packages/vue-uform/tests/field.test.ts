@@ -163,7 +163,7 @@ test("test field component custom scheme", async () => {
             },
             [
               h("label", arg.label),
-              arg.getSlots(),
+              arg.slot(),
               h("div", { class: "real-value" }, arg.valueRef.value as string),
             ]
           );
@@ -206,7 +206,7 @@ test("test field component custom scheme and validator", async () => {
             },
             [
               h("label", arg.label),
-              arg.getSlots(),
+              arg.slot(),
               h(
                 "div",
                 { class: "my-message" },
@@ -263,7 +263,7 @@ test("test field component custom scheme v-model", async () => {
             {
               style: { color: "green" },
             },
-            [h("label", arg.label), arg.getSlots()]
+            [h("label", arg.label), arg.slot()]
           );
         };
         const email = ref("xxx@yyy.com");

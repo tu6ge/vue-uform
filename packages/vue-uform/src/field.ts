@@ -152,7 +152,7 @@ export const UField = defineComponent(
         help: props.help,
         hasError,
         messages: validationMessages,
-        getSlots: () => {
+        slot: () => {
           return ctx.slots.default
             ? ctx.slots.default({
                 value: value.value,

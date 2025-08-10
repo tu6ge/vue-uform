@@ -122,7 +122,7 @@ test("test form component custom scheme", async () => {
             },
             [
               h("label", arg.label),
-              arg.getSlots(),
+              arg.slot(),
               h("div", { class: "real-value" }, arg.valueRef.value as string),
             ]
           );

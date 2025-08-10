@@ -83,7 +83,7 @@ const myScheme = (arg: SchemeArg) => {
     {
       style: { color: "green" },
     },
-    [h("label", arg.label), arg.getSlots(), h("div", arg.help)]
+    [h("label", arg.label), arg.slot(), h("div", arg.help)]
   );
 };
 </script>

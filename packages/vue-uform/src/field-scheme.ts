@@ -8,7 +8,5 @@ export interface SchemeArg {
   hasError: Ref<Boolean>;
   help: string | undefined;
   messages: Ref<string[]>;
-  // slots: Slots;
-  //update(a: string): void;
-  getSlots(): VNode[] | undefined;
+  slot(): VNode[] | undefined;
 }

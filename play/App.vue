@@ -21,7 +21,7 @@ const myScheme2 = (arg: SchemeArg) => {
     },
     [
       h("label", arg.label),
-      arg.getSlots(),
+      arg.slot(),
       h("div", arg.valueRef.value),
       h("div", JSON.stringify(arg.messages.value)),
     ]
