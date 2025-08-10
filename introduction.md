@@ -91,3 +91,45 @@ const myScheme = (arg: SchemeArg) => {
 you can using [`h`](https://vuejs.org/guide/extras/render-function.html) function freely combine elements
 
 the `f-model` is a sugar like `v-model`, this usage is [here](./packages/vite-plugin/README.md).
+
+## Validation Usage
+
+```vue
+<script setup>
+import { FieldNode } from "vue-uform";
+function isfruit(node: FieldNode): boolean | string {
+  const { value } = node;
+  if (value.value != "apple" && value.value != "banan") {
+    return "this value is not apple or banan";
+  }
+  return true;
+}
+</script>
+<template>
+  <u-form>
+    <!-- using build-in validation rules -->
+    <u-field
+      validation="required|number|between:10,20"
+      v-slot="{ value, update }"
+    >
+      <input f-model />
+    </u-field>
+
+    <!-- using custom validation rule -->
+    <u-field validation="isfruit" v-slot="{ value, update }">
+      <input f-model />
+    </u-field>
+
+    <!-- using custom validation message -->
+    <u-field
+      validation="isfruit"
+      :validation-messages="{
+        isfruit: 'custom error message',
+      }"
+      v-slot="{ value, update }"
+    >
+      <input f-model />
+    </u-field>
+  </u-form>
+</template>
+```

@@ -32,24 +32,47 @@ export default defineConfig({
 });
 ```
 
-3. open a vue sfc file, and input this code:
+3. install Vue plugin in main.ts
+
+```ts
+import { plugin } from "vue-uform";
+
+const app = createApp(App);
+
+app.use(plugin, {}).mount("#app");
+```
+
+4. This is a simple example:
 
 ```vue
 <script setup>
+// init form values
 const formValues = {
   username: "",
   password: "",
 };
+
+// handler form submit event
 function doLogin(data) {
   console.log(data);
 }
 </script>
 <template>
   <u-form :values="formValues" @submit="doLogin">
-    <u-field name="username" label="Username" v-slot="{ value, update }">
+    <u-field
+      name="username"
+      label="Username"
+      validation="required"
+      v-slot="{ value, update }"
+    >
       <input f-model />
     </u-field>
-    <u-field name="password" label="Password" v-slot="{ value, update }">
+    <u-field
+      name="password"
+      label="Password"
+      validation="required"
+      v-slot="{ value, update }"
+    >
       <input type="password" f-model />
     </u-field>
     <u-submit>Login</u-submit>
