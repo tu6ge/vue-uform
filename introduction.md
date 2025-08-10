@@ -129,13 +129,18 @@ function isfruit(node: FieldNode): boolean | string {
     </u-field>
 
     <!-- using custom validation rule -->
-    <u-field validation="isfruit" v-slot="{ value, update }">
+    <u-field
+      validation="isfruit"
+      :rules="{ isfruit }"
+      v-slot="{ value, update }"
+    >
       <input f-model />
     </u-field>
 
     <!-- using custom validation message -->
     <u-field
       validation="isfruit"
+      :rules="{ isfruit }"
       :validation-messages="{
         isfruit: 'custom error message',
       }"
