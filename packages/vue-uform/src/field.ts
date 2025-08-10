@@ -162,7 +162,7 @@ export const UField = defineComponent(
                   } else if (type == "array") {
                     if (Array.isArray(value.value)) {
                       const existIndex = value.value.findIndex(
-                        (res) => res == val
+                        (res: unknown) => res == val
                       );
                       if (existIndex > -1) {
                         value.value.splice(existIndex, 1);
