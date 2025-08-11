@@ -152,3 +152,333 @@ function isfruit(node: FieldNode): boolean | string {
   </u-form>
 </template>
 ```
+
+## Validation Available
+
+## Built-in Validation Rules
+
+You can use the following built-in validation rules in the `validation` prop of `<u-field>`.  
+Multiple rules can be combined with `|`, and rule parameters are passed with `:`, multiple parameters separated by `,`.
+
+Example:
+
+```vue
+<u-field name="username" validation="required|alpha|min:3|max:12" />
+```
+
+1. required
+
+Description
+
+The field value must not be empty. Empty strings (""), null, undefined, and empty arrays are considered invalid.
+
+Parameters
+None
+
+Example
+
+```vue
+<u-field name="email" validation="required" />
+```
+
+2. number
+
+Description
+
+The value must be a number or a string that can be parsed into a number.
+
+Parameters
+None
+
+Example
+
+```vue
+<u-field name="age" validation="number" />
+```
+
+3. confirm
+
+Description
+
+The value must match the value of another field (commonly used for password confirmation).
+
+Parameters
+
+fieldName – the name of the field to compare with.
+
+Example
+
+```vue
+<u-field name="password" validation="required" />
+<u-field name="confirmPassword" validation="confirm:password" />
+```
+
+4. accepted
+
+Description
+
+The field value must be true, "yes", "on", or "1" (commonly used for terms & conditions checkboxes).
+
+Parameters
+
+None
+
+Example
+
+```vue
+<u-field name="terms" validation="accepted" />
+```
+
+5. alpha
+
+Description
+
+The value may only contain alphabetic characters (A-Z, a-z).
+
+Parameters
+
+None
+
+Example
+
+```vue
+<u-field name="firstName" validation="alpha" />
+```
+
+6. alphanumeric
+
+Description
+
+The value may only contain letters and numbers.
+
+Parameters
+
+None
+
+Example
+
+```vue
+<u-field name="username" validation="alphanumeric" />
+```
+
+7. between
+
+Description
+
+The value must be between the specified minimum and maximum (numeric range).
+
+Parameters
+
+min,max – range boundaries.
+
+Example
+
+```vue
+<u-field name="age" validation="between:18,65" />
+```
+
+8. email
+
+Description
+
+The value must be a valid email address.
+
+Parameters
+
+None
+
+Example
+
+```vue
+<u-field name="email" validation="email" />
+```
+
+9. ends_with
+
+Description
+
+The value must end with one of the specified substrings.
+
+Parameters
+
+value1,value2,... – allowed endings.
+
+Example
+
+```vue
+<u-field name="domain" validation="ends_with:.com,.org" />
+```
+
+10. is
+
+Description
+
+The value must equal (==) the specified value.
+
+Parameters
+
+expectedValue
+
+Example
+
+```vue
+<u-field name="promoCode" validation="is:FREE100" />
+```
+
+11. length
+
+Description
+The value’s length must be between the specified minimum and maximum.
+
+Parameters
+
+- mix
+- max
+
+Example
+
+```vue
+<u-field name="password" validation="length:6,10" />
+```
+
+12. lowercase
+
+Description
+
+The value must be entirely lowercase letters.
+
+Parameters
+None
+
+Example
+
+```vue
+<u-field name="slug" validation="lowercase" />
+```
+
+13. max
+
+Description
+
+The value must not be greater than the specified maximum numeric
+
+Example
+
+```vue
+<u-field name="age" validation="max:120" />
+```
+
+14. min
+
+Description
+
+The value must not be less than the specified minimum (numeric).
+
+Parameters
+
+minValue
+
+Example
+
+```vue
+<u-field name="age" validation="min:18" />
+```
+
+15. not
+
+Description
+
+The value must not equal any of the specified values.
+
+Parameters
+
+value1,value2,...
+
+Example
+
+```vue
+<u-field name="username" validation="not:admin,root" />
+```
+
+16. starts_with
+
+Description
+
+The value must start with one of the specified
+substrings.
+
+Parameters
+
+value1,value2,...
+
+Example
+
+```vue
+<u-field name="phone" validation="starts_with:+86,+1" />
+```
+
+17. uppercase
+
+Description
+
+The value must be entirely uppercase letters.
+
+Parameters
+
+None
+
+Example
+
+```vue
+<u-field name="code" validation="uppercase" />
+```
+
+18. url
+
+Description
+
+The value must be a valid URL.
+
+Parameters
+
+None
+
+Example
+
+```vue
+<u-field name="website" validation="url" />
+```
+
+## Custom Validation
+
+Example with argment
+
+```vue
+<script setup lang="ts">
+import { FieldNode } from "vue-uform";
+
+// Custom validation rule with parameters
+function minWords(node: FieldNode, min: number): boolean | string {
+  const { value } = node;
+  const wordCount = String(value.value).trim().split(/\s+/).length;
+  if (wordCount < min) {
+    return `Please enter at least ${min} words.`;
+  }
+  return true;
+}
+</script>
+
+<template>
+  <u-form>
+    <u-field
+      name="bio"
+      label="Short Bio"
+      validation="min_words:5"
+      :rules="{ min_words: minWords }"
+      v-slot="{ value, update }"
+    >
+      <textarea f-model></textarea>
+    </u-field>
+  </u-form>
+</template>
+```
