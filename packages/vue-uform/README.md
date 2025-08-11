@@ -1,12 +1,14 @@
 # Vue-uForm
 
-Next vue form validator library. the library regards components as first-class citizens. All functions including data transfer and form validation, revolve around components. It has the following functions:
+> Vue-uForm is an unstyled, flexible form validation library for Vue 3, focusing on component-driven design.
 
-- Support third UI componnet library's input components
-- Support custom layout, e.g. label, input, help info,validator error message and more element free combination
-- Support a layout combination to act on all form fields
-- Support custom submit button
-- There's no need to write too much js/ts code; most of the logic is on the components
-- Support some build-in validator rule
+A next-generation Vue form validation library. the library regards components as first-class citizens. All functions including data transfer and form validation, revolve around components. It has the following functions:
+
+- 🎨 Works with any UI component library
+- 🧩 Fully customizable layout (label, input, help info, validation messages, etc.)
+- 📦 Apply layouts globally to all form fields
+- 🔘 Customizable submit button
+- ✨ Minimal JS/TS code — most logic stays in components
+- ✅ Built-in and custom validation rules
 
 Looking more info,to [this link](https://github.com/tu6ge/vue-uform).

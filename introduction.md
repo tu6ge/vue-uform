@@ -23,6 +23,7 @@ function doLogin(data) {
       validation="required"
       v-slot="{ value, update }"
     >
+      <!-- f-model is a directive similar to v-model, but designed for vue-uform fields. -->
       <input f-model />
     </u-field>
     <u-field
@@ -42,7 +43,7 @@ function doLogin(data) {
 </template>
 ```
 
-As you can see, our library does not contain any styles.This means that you can freely combine div elements and styles, we not have build-in every input components. you should to be use arbitrary input element or third input components.
+As you can see, our library does not contain any styles.This means that you can freely combine div elements and styles, we do not have built-in input components for every case. you should to be use any input element or third input components.
 
 To achieve functions such as form validation, we should not only have the input element but also information like label, help, and validation message. on default, my `<u-field>` component structure is:
 
@@ -73,7 +74,7 @@ You can add styles on this basis to customize your page. Not just that, you can 
 </template>
 ```
 
-Perhaps, you need to set all the fields in a form to the same structure, and this library can also meet your needs:
+In some cases, you may want all fields in a form to share the same structure, and this library can also meet your needs:
 
 ```vue
 <script setup lang="ts">
@@ -112,8 +113,8 @@ the `f-model` is a sugar like `v-model`, this usage is [here](./packages/vite-pl
 import { FieldNode } from "vue-uform";
 function isfruit(node: FieldNode): boolean | string {
   const { value } = node;
-  if (value.value != "apple" && value.value != "banan") {
-    return "this value is not apple or banan";
+  if (value.value != "apple" && value.value != "banana") {
+    return "this value is not apple or banana";
   }
   return true;
 }

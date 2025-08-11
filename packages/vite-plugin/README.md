@@ -2,27 +2,54 @@
 
 This is a vite plugin, A plugin used in conjunction with vue-uform.
 
+## Features
+
+- Works with all native HTML input types
+- Supports checkbox/radio/select (single/multiple)
+- Supports third-party UI components (Element Plus, Naive UI, etc.)
+- Minimal syntax, similar to v-model
+
+## Quick Start
+
+1. Install
+
+```bash
+pnpm install @vue-uform/vite-plugin -D
+```
+
+2. configure vite:
+
+```ts
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import uForm from "@vue-uform/vite-plugin";
+
+export default defineConfig({
+  plugins: [vue(), uForm()],
+});
+```
+
 used before:
 
 ```vue
-<tempalte>
-  <u-field v-slot="{value,update}">
-    <input :value="value" @input="$event=>update($event.target.value)"/>
+<template>
+  <u-field v-slot="{ value, update }">
+    <input :value="value" @input="($event) => update($event.target.value)" />
   </u-field>
-</tempalte>
+</template>
 ```
 
 used after:
 
 ```vue
-<tempalte>
-  <u-field v-slot="{value,update}">
+<template>
+  <u-field v-slot="{ value, update }">
     <input f-model />
   </u-field>
-</tempalte>
+</template>
 ```
 
-As you can see, it's like a v-model, also a grammatical sugar.
+As you can see, it's like a v-model, is also syntactic sugar.
 
 ## Usage
 
@@ -34,7 +61,7 @@ The sugar code:
 <input type="text" f-model />
 ```
 
-will general this code:
+will generate this code:
 
 ```vue
 <input type="text" :value="value" @input="$event=>update($event.target.value) />
@@ -42,13 +69,15 @@ will general this code:
 
 2. radio input
 
+Bind the radio button value directly. The field will be updated when selected.
+
 the sugar code:
 
 ```vue
 <input type="radio" value="foo" f-model />
 ```
 
-will general this code:
+will generate this code:
 
 ```vue
 <input
@@ -61,13 +90,15 @@ will general this code:
 
 3. checkbox input
 
+Bind the checkbox value directly. The field will be updated when selected.
+
 the sugar code:
 
 ```vue
 <input type="checkbox" f-model />
 ```
 
-will general this code:
+will generate this code:
 
 ```vue
 <input
@@ -85,7 +116,7 @@ the sugar code:
 <input type="checkbox" value="foo1" f-model />
 ```
 
-will general this code:
+will generate this code:
 
 ```vue
 <input
@@ -98,6 +129,8 @@ will general this code:
 
 5. select input
 
+Bind the select value directly. The field will be updated when selected.
+
 the sugar code:
 
 ```vue
@@ -109,7 +142,7 @@ the sugar code:
 </select>
 ```
 
-will general this code:
+will generate this code:
 
 ```vue
 <select :value="value" @change="update($event.target.value)">
@@ -133,7 +166,7 @@ the sugar code:
 </select>
 ```
 
-will general this code:
+will generate this code:
 
 ```vue
 <select
