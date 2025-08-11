@@ -9,6 +9,12 @@
   ],
   "main": "./dist/vite-plugin-vue-uform.umd.cjs",
   "module": "./dist/vite-plugin-vue-uform.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vite-plugin-vue-uform.js",
+      "require": "./dist/vite-plugin-vue-uform.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
