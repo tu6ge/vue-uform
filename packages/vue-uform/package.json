@@ -20,6 +20,11 @@
     "build": "vite build",
     "test": "vitest"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu6ge/vue-uform.git",
+    "directory": "packages/vue-uform"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
