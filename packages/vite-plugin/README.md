@@ -25,7 +25,7 @@ import vue from "@vitejs/plugin-vue";
 import uForm from "@vue-uform/vite-plugin";
 
 export default defineConfig({
-  plugins: [vue(), uForm({})],
+  plugins: [vue(), uForm()],
 });
 ```
 

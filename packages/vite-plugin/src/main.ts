@@ -4,7 +4,7 @@ import type { Plugin } from "vite";
 import { getVuePluginApi, VuePluginApi } from "./utils";
 import { transformFmodel } from "./core";
 
-export default function fModelPlugin(options: {}): Plugin {
+export default function fModelPlugin(options: {} = {}): Plugin {
   let api: VuePluginApi | null | undefined;
 
   return {
