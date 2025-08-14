@@ -92,11 +92,11 @@ const myScheme = (arg: SchemeArg) => {
     h("label", { class: "myscheme-label" }, arg.label),
     h("div", { class: "myscheme-input" }, [arg.slot()]),
     arg.help ? h("div", { class: "myscheme-help" }, arg.help) : null,
-    arg.messages && arg.messages.length
+    arg.messages.value && arg.messages.value.length
       ? h(
           "ul",
           { class: "myscheme-messages" },
-          arg.messages.map((e: string) => h("li", e))
+          arg.messages.value.map((e: string) => h("li", e))
         )
       : null,
   ]);
