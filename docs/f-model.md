@@ -1,55 +1,6 @@
-# @vue-uform/vite-plugin
+# f-model Sugar
 
-This is a vite plugin, A plugin used in conjunction with vue-uform.
-
-## Features
-
-- Works with all native HTML input types
-- Supports checkbox/radio/select (single/multiple)
-- Supports third-party UI components (Element Plus, Naive UI, etc.)
-- Minimal syntax, similar to v-model
-
-## Quick Start
-
-1. Install
-
-```bash
-pnpm install @vue-uform/vite-plugin -D
-```
-
-2. configure vite:
-
-```ts
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import uForm from "@vue-uform/vite-plugin";
-
-export default defineConfig({
-  plugins: [vue(), uForm()],
-});
-```
-
-used before:
-
-```vue
-<template>
-  <u-field v-slot="{ value, update }">
-    <input :value="value" @input="($event) => update($event.target.value)" />
-  </u-field>
-</template>
-```
-
-used after:
-
-```vue
-<template>
-  <u-field v-slot="{ value, update }">
-    <input f-model />
-  </u-field>
-</template>
-```
-
-As you can see, it's like a v-model, is also syntactic sugar.
+`f-model` is a syntax sugar for two-way binding similar to `v-model`. The difference is that it establishes two-way binding with its parent component, rather than with the component itself.
 
 ## Usage
 
@@ -191,6 +142,9 @@ will generate this code:
 7. third UI component examples:
 
 ```vue
+<!-- Naive UI -->
 <n-input f-model:value></n-input>
+
+<!-- Element Plus UI -->
 <el-input f-model></el-input>
 ```

@@ -8,7 +8,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      //{ text: "Examples", link: "/markdown-examples" },
+      //{ text: "API", link: "/api" },
     ],
 
     sidebar: [
@@ -20,19 +20,19 @@ export default defineConfig({
         text: "Components",
         items: [
           {
-            text: "u-form",
-            link: "/u-form",
-          },
-          {
-            text: "u-field",
+            text: "&lt;u-field&gt;",
             link: "/u-field",
           },
           {
-            text: "u-submit",
+            text: "&lt;u-form&gt;",
+            link: "/u-form",
+          },
+          {
+            text: "&lt;u-submit&gt;",
             link: "/u-submit",
           },
           {
-            text: "u-reset",
+            text: "&lt;u-reset&gt;",
             link: "/u-reset",
           },
         ],
@@ -45,26 +45,26 @@ export default defineConfig({
         text: "Vite Plugin",
         items: [
           {
-            text: "f-model",
+            text: "f-model sugar",
             link: "/f-model",
           },
         ],
       },
-      {
-        text: "Custom",
-        link: "/custom",
-      },
+      // {
+      //   text: "Custom",
+      //   link: "/custom",
+      // },
       {
         text: "Examples",
         link: "/examples",
       },
-      {
-        text: "Examples",
-        items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
-        ],
-      },
+      // {
+      //   text: "Examples",
+      //   items: [
+      //     { text: "Markdown Examples", link: "/markdown-examples" },
+      //     { text: "Runtime API Examples", link: "/api-examples" },
+      //   ],
+      // },
     ],
 
     socialLinks: [

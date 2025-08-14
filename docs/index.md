@@ -11,8 +11,8 @@ hero:
       text: Get Stared
       link: /guid
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: GitHub
+      link: https://github.com/tu6ge/vue-uform
 
 features:
   - title: Works with any UI component library
