@@ -4,6 +4,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "Vue uForm",
   description: "a component-first, no-style,flexable form validation",
+  base: process.env.NODE_ENV === "production" ? "/vue-uform/" : "/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
