@@ -31,7 +31,7 @@ export interface FieldProps {
 export type FieldNode = {
   name: string;
   label: string;
-  value: Ref<unknown>;
+  value: unknown;
   at: (path: string) => FieldNode;
 };
 type FieldUpdateType = "primitive" | "array";
@@ -66,11 +66,12 @@ export const UField = defineComponent(
       thisValue || props.modelValue || props.value || undefined
     );
     const hasError = ref(false);
-    const fieldNode = createFieldNode(
-      { name: props.name, label: props.label || "", value },
-      formValues
-    );
+
     const doValidator = () => {
+      const fieldNode = createFieldNode(
+        { name: props.name, label: props.label || "", value: value.value },
+        formValues
+      );
       let validator_result = validatior(
         fieldNode,
         props.validation,
@@ -243,7 +244,7 @@ export function createFieldNode(
     ...node,
     at(path: string): FieldNode {
       // TODO Multidimensional form fields were not considered
-      let value = ref(values.value[path].value);
+      let value = values.value[path].value;
       return createFieldNode(
         { name: path, label: values.value[path].label, value },
         values

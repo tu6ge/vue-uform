@@ -60,7 +60,7 @@ export const messages: Messages = {
     return `${label} must be greater than ${args[0]}`;
   },
   not: ({ label, node }) => {
-    return `“${node.value.value}” is not an allowed ${label}.`;
+    return `“${node.value}” is not an allowed ${label}.`;
   },
   starts_with: ({ label, args }) => {
     return `${label} doesn’t start with ${args.join(",")}.`;

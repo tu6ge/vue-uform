@@ -304,7 +304,7 @@ test("test createFieldNode function", () => {
     formValues
   );
   expect(field.at("password").name).toBe("password");
-  expect(field.at("password").value.value).toBe("101010");
+  expect(field.at("password").value).toBe("101010");
 });
 
 test("test field component validation message", async () => {
@@ -371,9 +371,8 @@ test("test field component custom validation", async () => {
   const wrapper = mount(
     {
       setup() {
-        function isfruit(node: FieldNode): boolean | string {
-          const { value } = node;
-          if (value.value != "apple" && value.value != "banan") {
+        function isfruit({ value }: FieldNode): boolean | string {
+          if (value != "apple" && value != "banan") {
             return "this value is not apple or banan";
           }
           return true;

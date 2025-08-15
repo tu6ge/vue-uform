@@ -111,9 +111,8 @@ the `f-model` is a sugar like `v-model`, this usage is [here](./packages/vite-pl
 ```vue
 <script setup>
 import { FieldNode } from "vue-uform";
-function isfruit(node: FieldNode): boolean | string {
-  const { value } = node;
-  if (value.value != "apple" && value.value != "banana") {
+function isfruit({ value }: FieldNode): boolean | string {
+  if (value != "apple" && value != "banana") {
     return "this value is not apple or banana";
   }
   return true;
@@ -458,9 +457,8 @@ Example with argment
 import { FieldNode } from "vue-uform";
 
 // Custom validation rule with parameters
-function minWords(node: FieldNode, min: number): boolean | string {
-  const { value } = node;
-  const wordCount = String(value.value).trim().split(/\s+/).length;
+function minWords({ value }: FieldNode, min: number): boolean | string {
+  const wordCount = String(value).trim().split(/\s+/).length;
   if (wordCount < min) {
     return `Please enter at least ${min} words.`;
   }
