@@ -11,4 +11,6 @@ A next-generation Vue form validation library. the library regards components as
 - ✨ Minimal JS/TS code — most logic stays in components
 - ✅ Built-in and custom validation rules
 
-Looking more info,to [this link](https://github.com/tu6ge/vue-uform).
+Looking more info,to [Github](https://github.com/tu6ge/vue-uform).
+
+[Documents](https://tu6ge.github.io/vue-uform/)

@@ -9,6 +9,8 @@ This is a vite plugin, A plugin used in conjunction with vue-uform.
 - Supports third-party UI components (Element Plus, Naive UI, etc.)
 - Minimal syntax, similar to v-model
 
+[Documents](https://tu6ge.github.io/vue-uform/)
+
 ## Quick Start
 
 1. Install
