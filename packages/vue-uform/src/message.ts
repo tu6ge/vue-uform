@@ -39,7 +39,7 @@ export const messages: Messages = {
     return `${label} must be between ${args[0]} and ${args[1]}.`;
   },
   email: ({ label }) => {
-    return `${label} must be a email url`;
+    return `${label} must be a email address`;
   },
   ends_with: ({ label, args }) => {
     return `${label} doesn’t end with ${args.join(",")}.`;
