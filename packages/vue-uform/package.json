@@ -1,7 +1,7 @@
 {
   "name": "vue-uform",
   "version": "0.2.1",
-  "description": "",
+  "description": "Vue-uForm is an unstyled, flexible form validation library for Vue 3, focusing on component-driven design.",
   "type": "module",
   "files": [
     "dist",
@@ -25,7 +25,14 @@
     "url": "https://github.com/tu6ge/vue-uform.git",
     "directory": "packages/vue-uform"
   },
-  "keywords": [],
+  "keywords": [
+    "vue-component",
+    "vue-validation",
+    "validation",
+    "unstyled",
+    "component",
+    "flexible"
+  ],
   "author": "",
   "license": "MIT",
   "packageManager": "pnpm@10.13.1",

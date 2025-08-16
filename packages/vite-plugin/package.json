@@ -1,7 +1,7 @@
 {
   "name": "@vue-uform/vite-plugin",
   "version": "0.2.1",
-  "description": "",
+  "description": "A plugin used in conjunction with vue-uform.",
   "type": "module",
   "files": [
     "dist",
@@ -26,7 +26,10 @@
     "directory": "packages/vite-plugin"
   },
   "keywords": [
-    "vite-plugin-vue"
+    "vite-plugin-vue",
+    "vue-uform",
+    "f-model",
+    "sugar"
   ],
   "author": "",
   "license": "MIT",
