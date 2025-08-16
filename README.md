@@ -85,3 +85,5 @@ function doLogin(data) {
   </u-form>
 </template>
 ```
+
+More examples to see [document](https://tu6ge.github.io/vue-uform/)
