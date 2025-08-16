@@ -74,7 +74,9 @@ function doLogin(data) {
     <u-submit>Login</u-submit>
     <!-- or -->
     <u-submit custom v-slot="{ submit }">
-      <button :style="{ color: 'blue' }" @click="submit">Login</button>
+      <button type="button" :style="{ color: 'blue' }" @click="submit">
+        Login
+      </button>
     </u-submit>
   </u-form>
 </template>
