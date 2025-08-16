@@ -138,20 +138,24 @@ function isfruit(node) {
       <input f-model />
     </u-field>
 
-    <u-field name="fruits[0]" v-slot="{ value, update }">
+    <u-field name="fruits[0]" v-slot="{ value, update }" label="Fruit #1">
       <input f-model />
     </u-field>
-    <u-field name="fruits[1]" v-slot="{ value, update }">
+    <u-field name="fruits[1]" v-slot="{ value, update }" label="Fruit #2">
       <input f-model />
     </u-field>
 
-    <u-field-array name="fruits">
-      <u-field name="fruits[0]" v-slot="{ value, update }">
-        <input f-model />
-      </u-field>
-      <u-field name="fruits[1]" v-slot="{ value, update }">
-        <input f-model />
-      </u-field>
+    <!-- render to "<div> default slot </div>" -->
+    <u-field-array name="fruits" class="my-class">
+      <label>Fruit List</label>
+      <div>
+        <u-field name="fruits[0]" v-slot="{ value, update }">
+          <input f-model />
+        </u-field>
+        <u-field name="fruits[1]" v-slot="{ value, update }">
+          <input f-model />
+        </u-field>
+      </div>
     </u-field-array>
   </u-form>
 </template>
