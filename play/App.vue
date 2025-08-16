@@ -40,10 +40,9 @@ function doSave(data: Object) {
   console.log(data);
 }
 
-function isfruit(node: FieldNode): boolean | string {
-  const { value } = node;
-  if (value.value != "apple" && value.value != "banan") {
-    return "this value is not apple or banan";
+function isfruit({ value }: FieldNode): boolean | string {
+  if (value != "apple" && value != "banana") {
+    return "this value is not apple or banana";
   }
   return true;
 }
