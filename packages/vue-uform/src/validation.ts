@@ -32,13 +32,12 @@ export function parseValidations(s: string): Validation[] {
 
 export function validatior(
   node: FieldNode,
-  validations_str: string,
+  validations: Validation[],
   custom_messages: { [key: string]: string },
   rules: {
     [key: string]: (node: FieldNode, ...arg: string[]) => boolean | string;
   }
 ): boolean | string[] {
-  const validations = parseValidations(validations_str);
   let messages: string[] = [];
   const validationList = getValidations(rules);
   validations.map((valid) => {

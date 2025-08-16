@@ -127,11 +127,12 @@ In addition to the custom and scheme mentioned above, we also support setting sc
 
 ## Scheme Argments
 
-| Name     | Description                                                                                  |
-| -------- | -------------------------------------------------------------------------------------------- |
-| name     | the form field's key                                                                         |
-| label    | the field's showing label message                                                            |
-| valueRef | the field's value,this is reactive                                                           |
-| help     | the field's help message                                                                     |
-| hasError | If the validation fails, it will return true; the default is false.                          |
-| messages | This is a collection of all the validation error messages for this u-field. this is an array |
+| Name             | Description                                                                                  |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+| name             | the form field's key                                                                         |
+| label            | the field's showing label message                                                            |
+| valueRef         | the field's value,this is reactive                                                           |
+| help             | the field's help message                                                                     |
+| hasError         | If the validation fails, it will return true; the default is false.                          |
+| messages         | This is a collection of all the validation error messages for this u-field. this is an array |
+| validation_names | the field added validation rules's name, tip: it can be used to display "\*"                 |

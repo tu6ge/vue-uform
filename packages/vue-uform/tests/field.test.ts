@@ -253,6 +253,74 @@ test("test field component custom scheme and validator", async () => {
   expect(wrapper.vm.result).toEqual({ username: "foo" });
 });
 
+test("test field component custom scheme and validation names argment", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const myScheme = (arg: SchemeArg) => {
+          return h(
+            "div",
+            {
+              style: { color: "green" },
+              "data-name": arg.name,
+            },
+            [
+              h(
+                "label",
+                {
+                  class:
+                    arg.validation_names.indexOf("required") > -1
+                      ? "has-required"
+                      : "",
+                },
+                arg.label
+              ),
+              arg.slot(),
+              h(
+                "div",
+                { class: "my-message" },
+                arg.messages.value.length > 0 ? arg.messages.value[0] : ""
+              ),
+            ]
+          );
+        };
+        const result = ref({});
+        const save = (val: {}) => {
+          result.value = val;
+        };
+        return {
+          myScheme,
+          save,
+          result,
+        };
+      },
+      template: `
+        <u-form @submit="save">
+          <u-field :scheme="myScheme" name="username" label="Username" validation="required" v-slot="{value,update}" >
+            <input :value="value" @input="update($event.target.value)" />
+          </u-field>
+          <u-field :scheme="myScheme" name="email" label="Email" v-slot="{value,update}" >
+            <input :value="value" @input="update($event.target.value)" />
+          </u-field>
+          <u-submit>Save</u-submit>
+        </u-form>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  expect(wrapper.find('[data-name="username"]').html()).contain(
+    `<label class="has-required">Username</label>`
+  );
+
+  expect(wrapper.find('[data-name="email"]').html()).contain(
+    `<label class="">Email</label>`
+  );
+});
+
 test("test field component custom scheme v-model", async () => {
   const wrapper = mount(
     {

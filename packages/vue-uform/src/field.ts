@@ -20,7 +20,7 @@ import {
   FormResetUseid,
   FormResetValue,
 } from "./form";
-import { validatior } from "./validation";
+import { parseValidations, validatior } from "./validation";
 
 export interface FieldProps {
   name: string;
@@ -67,6 +67,8 @@ export const UField = defineComponent(
     );
     const hasError = ref(false);
 
+    const validations = parseValidations(props.validation);
+
     const doValidator = () => {
       const fieldNode = createFieldNode(
         { name: props.name, label: props.label || "", value: value.value },
@@ -74,7 +76,7 @@ export const UField = defineComponent(
       );
       let validator_result = validatior(
         fieldNode,
-        props.validation,
+        validations,
         props.validationMessages,
         props.rules
       );
@@ -145,6 +147,7 @@ export const UField = defineComponent(
     ) => VNode;
 
     if (props.scheme || formScheme) {
+      const validation_names = validations.map((res) => res.name);
       let schemeArg: SchemeArg = {
         name: props.name,
         label: props.label,
@@ -153,6 +156,7 @@ export const UField = defineComponent(
         help: props.help,
         hasError,
         messages: validationMessages,
+        validation_names,
         slot: () => {
           return ctx.slots.default
             ? ctx.slots.default({

@@ -8,5 +8,6 @@ export interface SchemeArg {
   hasError: Ref<Boolean>;
   help: string | undefined;
   messages: Ref<string[]>;
+  validation_names: string[];
   slot(): VNode[] | undefined;
 }
