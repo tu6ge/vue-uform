@@ -128,3 +128,31 @@ function isfruit(node) {
   ></u-field>
 </template>
 ```
+
+## Object & Array
+
+```vue
+<template>
+  <u-form>
+    <u-field name="address.country" v-slot="{ value, update }">
+      <input f-model />
+    </u-field>
+
+    <u-field name="fruits[0]" v-slot="{ value, update }">
+      <input f-model />
+    </u-field>
+    <u-field name="fruits[1]" v-slot="{ value, update }">
+      <input f-model />
+    </u-field>
+
+    <u-field-array name="fruits">
+      <u-field name="fruits[0]" v-slot="{ value, update }">
+        <input f-model />
+      </u-field>
+      <u-field name="fruits[1]" v-slot="{ value, update }">
+        <input f-model />
+      </u-field>
+    </u-field-array>
+  </u-form>
+</template>
+```
