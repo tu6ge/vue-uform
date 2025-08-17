@@ -98,9 +98,9 @@ export const UField = defineComponent(
     watch(formResetUseid, () => {
       hasError.value = false;
       validationMessages.value = [];
-      if (props.name in formValues.value) {
-        const item = formValues.value[props.name];
-        value.value = item.value;
+      const val = getDeep(formValues.value, props.name);
+      if (val.value) {
+        value.value = val.value;
       } else {
         value.value = "";
       }
@@ -247,10 +247,9 @@ export function createFieldNode(
   return {
     ...node,
     at(path: string): FieldNode {
-      // TODO Multidimensional form fields were not considered
-      let value = values.value[path].value;
+      const child = getDeep(values.value, path);
       return createFieldNode(
-        { name: path, label: values.value[path].label, value },
+        { name: path, label: child.label, value: child.value },
         values
       );
     },
@@ -258,8 +257,39 @@ export function createFieldNode(
 }
 
 function getThisValueFromForm(values: Ref<FormValues>, name: string): unknown {
-  if (name in values.value) {
-    return values.value[name].value;
+  if (!name) {
+    return undefined;
   }
-  return undefined;
+  // Convert foo.bar[0].baz to foo.bar.0.baz, then split('.')
+  const path = name.replace(/\[(\w+)\]/g, ".$1").split(".");
+  let current: any = values.value;
+  for (let i = 0; i < path.length; i++) {
+    if (current == null) return undefined;
+    const key = path[i];
+    if (typeof current === "object" && key in current) {
+      current = current[key];
+    } else if (Array.isArray(current) && !isNaN(Number(key))) {
+      // array index
+      current = current[Number(key)];
+    } else {
+      return undefined;
+    }
+  }
+  // If current is an object with .value, return .value, else return current
+  if (current && typeof current === "object" && "value" in current) {
+    return current.value;
+  }
+  return current;
+}
+
+// getDeep: safely get a nested property via path like 'foo.bar[0].baz'
+function getDeep(obj: any, path: string): any {
+  if (!path) return obj;
+  const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
+  let current = obj;
+  for (let part of parts) {
+    if (current == null) return undefined;
+    current = current[part];
+  }
+  return current;
 }
