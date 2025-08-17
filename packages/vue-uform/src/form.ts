@@ -37,24 +37,10 @@ export const UForm = defineComponent(
     const thisValues = initFormValues(props.values);
     provide(FormValueProvideKey, thisValues);
     provide(FormUpdateLabelProvideKey, (key: string, label: string) => {
-      if (key in thisValues.value) {
-        thisValues.value[key].label = label;
-      } else {
-        thisValues.value[key] = {
-          label,
-          value: "",
-        };
-      }
+      formUpdateLabel(thisValues, key, label);
     });
     provide(FormUpdateValueProvideKey, (key: string, value: unknown) => {
-      if (key in thisValues.value) {
-        thisValues.value[key].value = value;
-      } else {
-        thisValues.value[key] = {
-          label: "",
-          value,
-        };
-      }
+      formUpdateValue(thisValues, key, value);
     });
     const thisValidatorResult = ref<FormValidatorResult>({});
     provide(FormUpdateValidatorProvideKey, (key: string, value: boolean) => {
@@ -138,4 +124,26 @@ export function initFormValues(values: {
     }
   }
   return thisValues;
+}
+
+function formUpdateLabel(values: Ref<FormValues>, key: string, label: string) {
+  if (key in values.value) {
+    values.value[key].label = label;
+  } else {
+    values.value[key] = {
+      label,
+      value: "",
+    };
+  }
+}
+
+function formUpdateValue(values: Ref<FormValues>, key: string, value: unknown) {
+  if (key in values.value) {
+    values.value[key].value = value;
+  } else {
+    values.value[key] = {
+      label: "",
+      value,
+    };
+  }
 }
