@@ -241,3 +241,52 @@ test("test form reset with empty values", async () => {
     (wrapper.find("input[data-name=email]").element as HTMLInputElement).value
   ).toBe("");
 });
+
+test("test form component custom scheme without validation message", async () => {
+  const wrapper = mount(
+    {
+      setup() {
+        const myScheme = (arg: SchemeArg) => {
+          return h(
+            "div",
+            {
+              style: { color: "green" },
+            },
+            [h("label", arg.label), arg.slot()]
+          );
+        };
+        const data = ref({});
+        function save(d: {}) {
+          data.value = d;
+        }
+        return {
+          myScheme,
+          save,
+          data,
+        };
+      },
+      template: `
+      <u-form :scheme="myScheme" @submit="save">
+        <u-field label="FooLabel" name="name" validation="required" v-slot="{value,update}" >
+          <input :value="value" @input="update($event.target.value)" />
+        </u-field>
+        <u-submit></u-submit>
+      </u-form>`,
+    },
+    {
+      global: {
+        plugins: [[plugin, {}]],
+      },
+    }
+  );
+
+  await wrapper.find("button").trigger("click");
+
+  expect(Object.keys(wrapper.vm.data).length).toBe(0);
+
+  wrapper.find("input").setValue("foo");
+
+  await wrapper.find("button").trigger("click");
+
+  expect(wrapper.vm.data.name).toBe("foo");
+});
