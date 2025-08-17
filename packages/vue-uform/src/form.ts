@@ -47,7 +47,6 @@ export const UForm = defineComponent(
       }
     });
     provide(FormUpdateValueProvideKey, (key: string, value: unknown) => {
-      thisValues.value[key].value = value;
       if (key in thisValues.value) {
         thisValues.value[key].value = value;
       } else {
