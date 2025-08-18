@@ -36,6 +36,10 @@ export default defineConfig({
             text: "&lt;u-reset&gt;",
             link: "/u-reset",
           },
+          {
+            text: "nest object/array",
+            link: "/nest",
+          },
         ],
       },
       {
