@@ -12,11 +12,10 @@ export default defineConfig({
       fileName: "vite-plugin-vue-uform",
     },
     rollupOptions: {
-      external: ["vite", "vue"],
+      external: ["vite", "@vitejs/plugin-vue"],
       output: {
         globals: {
           vite: "Vite",
-          vue: "Vue",
         },
       },
     },
