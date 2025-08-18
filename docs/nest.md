@@ -1,4 +1,4 @@
-# Nest of Object / Array <span style="background: #22c55e; color:#fff; border-radius:5px; padding-left:5px; padding-right:5px;">+0.3.0</span>
+# Nest of Object / Array <Badge type="tip" text="+0.3.0" />
 
 vue-uform support nest form field, this has object and array two way of nest.
 
