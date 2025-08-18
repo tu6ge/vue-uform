@@ -141,7 +141,7 @@ function buildResetValues(template: any, dataObj: any): any {
 }
 
 // setDeep: safely set a nested property via path like 'foo.bar[0].baz'
-function setDeep(obj: any, path: string, value: any, setLabel?: string) {
+export function setDeep(obj: any, path: string, value: any, setLabel?: string) {
   if (!path) return;
   const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
   let current = obj;

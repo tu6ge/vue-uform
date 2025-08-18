@@ -282,7 +282,7 @@ function getThisValueFromForm(values: Ref<FormValues>, name: string): unknown {
 }
 
 // getDeep: safely get a nested property via path like 'foo.bar[0].baz'
-function getDeep(obj: any, path: string): any {
+export function getDeep(obj: any, path: string): any {
   if (!path) return obj;
   const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
   let current = obj;

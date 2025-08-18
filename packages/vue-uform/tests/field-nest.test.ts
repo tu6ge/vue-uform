@@ -2,6 +2,8 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import { plugin, SchemeArg } from "../src/main";
 import { h, ref } from "vue";
+import { getDeep } from "../src/field";
+import { setDeep } from "../src/form";
 
 test("test form component values props with object nest", async () => {
   const wrapper = mount(
@@ -143,4 +145,68 @@ test("test form reset with nest values", async () => {
   expect(
     (wrapper.find("input[data-name=country]").element as HTMLInputElement).value
   ).toBe("foo333");
+});
+
+test("test getDeep", () => {
+  const formValues = {
+    address: {
+      country: {
+        label: "foo",
+        value: "bar",
+      },
+    },
+  };
+
+  let obj = getDeep(formValues, "address.country");
+  expect(obj).toStrictEqual({ label: "foo", value: "bar" });
+
+  const formValues2 = {
+    address: [
+      {
+        country: {
+          label: "foo",
+          value: "bar",
+        },
+      },
+      {
+        country: {
+          label: "foo1",
+          value: "bar1",
+        },
+      },
+    ],
+  };
+
+  let obj2 = getDeep(formValues2, "address[1].country");
+  expect(obj2).toStrictEqual({ label: "foo1", value: "bar1" });
+});
+
+test("test setDeep", () => {
+  let formValues = {};
+  setDeep(formValues, "username.nest", undefined, "Username");
+  setDeep(formValues, "username.nest", "Foo");
+
+  expect(formValues).toStrictEqual({
+    username: {
+      nest: {
+        label: "Username",
+        value: "Foo",
+      },
+    },
+  });
+
+  let formValues2 = {};
+  setDeep(formValues2, "username[0].nest", undefined, "Username");
+  setDeep(formValues2, "username[0].nest", "Foo");
+
+  expect(formValues2).toStrictEqual({
+    username: [
+      {
+        nest: {
+          label: "Username",
+          value: "Foo",
+        },
+      },
+    ],
+  });
 });
