@@ -31,7 +31,6 @@ export const FormSubmitProvideKey = Symbol("u-form-submit");
 export const FormSubmitUseidProvideKey = Symbol("u-form-submit-useid");
 export const FormSchemeKey = Symbol("form-scheme");
 export const FormResetUseid = Symbol("form-reset-useid");
-export const FormResetValue = Symbol("form-reset");
 export const FormResetButton = Symbol("form-reset-button");
 
 export const UForm = defineComponent(
