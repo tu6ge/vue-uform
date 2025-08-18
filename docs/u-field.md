@@ -21,7 +21,7 @@ This is a component for form fields, with each instance corresponding to one inp
 ```
 
 ::: tip
-`f-model` is a syntax sugar for two-way binding similar to `v-model`. The difference is that it establishes two-way binding with its parent component, rather than with the component itself.
+[`f-model`](f-model.md) is a syntax sugar for two-way binding similar to `v-model`. The difference is that it establishes two-way binding with its parent component, rather than with the component itself.
 :::
 
 It will be transformed into the following HTML code

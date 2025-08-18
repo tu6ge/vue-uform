@@ -1,6 +1,6 @@
 # f-model Sugar
 
-`f-model` is a syntax sugar for two-way binding similar to `v-model`. The difference is that it establishes two-way binding with its parent component, rather than with the component itself.
+`f-model` is a syntax sugar for two-way binding similar to `v-model`. The difference is that it establishes two-way binding with its parent component, rather than with the component itself. it support all basic input type,(e.g.: input,textarea,radio,checkbox,select) and third UI components(e.g.: ElementPlusUI, NaiveUI).
 
 ## Usage
 
