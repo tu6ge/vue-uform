@@ -29,13 +29,23 @@ export default defineConfig({
 });
 ```
 
+global register components
+
 ```ts
 // ./src/main.ts
 import { plugin } from "vue-uform";
 
 const app = createApp(App);
 
-app.use(plugin, {}).mount("#app");
+app.use(plugin).mount("#app");
+```
+
+or import components in Vue SFC file
+
+```vue
+<script setup>
+import { Form, Field, Submit, Reset } from "vue-uform";
+</script>
 ```
 
 ## Example

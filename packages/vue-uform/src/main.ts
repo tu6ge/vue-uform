@@ -7,8 +7,10 @@ import { USubmit } from "./submit";
 
 export type { SchemeArg, FieldNode };
 
+export { UForm as Form, UField as Field, UReset as Reset, USubmit as Submit };
+
 export const plugin = {
-  install(app: App, option: any) {
+  install(app: App, option: any = {}) {
     app.component("u-form", UForm);
     app.component("u-field", UField);
     app.component("u-submit", USubmit);
