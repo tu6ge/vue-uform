@@ -63,7 +63,7 @@ will generate this code:
 />
 ```
 
-4. checkbox group input, this `u-field`'s value is an array
+4. checkbox group input, this `u-field`'s value is must an array
 
 the sugar code:
 
@@ -108,7 +108,7 @@ will generate this code:
 </select>
 ```
 
-6. select with multiple
+6. select with multiple, this `u-field`'s value is must an array
 
 the sugar code:
 
