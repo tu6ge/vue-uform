@@ -288,5 +288,5 @@ test("test form component custom scheme without validation message", async () =>
 
   await wrapper.find("button").trigger("click");
 
-  expect(wrapper.vm.data.name).toBe("foo");
+  expect((wrapper.vm.data as { name: string }).name).toBe("foo");
 });
