@@ -76,50 +76,6 @@ export const UForm = defineComponent(
       reset(data);
     });
     function reset(data: { [name: string]: unknown } = {}) {
-      // Recursively re-init form values, supporting nested structure.
-      // If data provided, use data; else reset to empty string.
-      function buildResetValues(template: any, dataObj: any): any {
-        if (Array.isArray(template)) {
-          // If template is array, process each element recursively.
-          return template.map((item, idx) =>
-            buildResetValues(
-              item,
-              Array.isArray(dataObj) ? dataObj[idx] : undefined
-            )
-          );
-        } else if (
-          template !== null &&
-          typeof template === "object" &&
-          !(
-            "value" in template &&
-            "label" in template &&
-            Object.keys(template).length <= 2
-          )
-        ) {
-          // Nested object (not FormValueNode)
-          const obj: any = {};
-          for (const k in template) {
-            obj[k] = buildResetValues(
-              template[k],
-              dataObj && typeof dataObj === "object" ? dataObj[k] : undefined
-            );
-          }
-          return obj;
-        } else {
-          // Leaf node: FormValueNode
-          let value: unknown = "";
-          if (dataObj !== undefined) {
-            value = dataObj;
-          }
-          return {
-            label:
-              template && typeof template === "object" && "label" in template
-                ? template.label
-                : "",
-            value,
-          };
-        }
-      }
       // Re-initialize the form values recursively.
       const newValues: any = buildResetValues(thisValues.value, data);
       thisValues.value = newValues;
@@ -141,6 +97,48 @@ export const UForm = defineComponent(
     emits: ["submit"],
   }
 );
+
+// Recursively re-init form values, supporting nested structure.
+// If data provided, use data; else reset to empty string.
+function buildResetValues(template: any, dataObj: any): any {
+  if (Array.isArray(template)) {
+    // If template is array, process each element recursively.
+    return template.map((item, idx) =>
+      buildResetValues(item, Array.isArray(dataObj) ? dataObj[idx] : undefined)
+    );
+  } else if (
+    template !== null &&
+    typeof template === "object" &&
+    !(
+      "value" in template &&
+      "label" in template &&
+      Object.keys(template).length <= 2
+    )
+  ) {
+    // Nested object (not FormValueNode)
+    const obj: any = {};
+    for (const k in template) {
+      obj[k] = buildResetValues(
+        template[k],
+        dataObj && typeof dataObj === "object" ? dataObj[k] : undefined
+      );
+    }
+    return obj;
+  } else {
+    // Leaf node: FormValueNode
+    let value: unknown = "";
+    if (dataObj !== undefined) {
+      value = dataObj;
+    }
+    return {
+      label:
+        template && typeof template === "object" && "label" in template
+          ? template.label
+          : "",
+      value,
+    };
+  }
+}
 
 // setDeep: safely set a nested property via path like 'foo.bar[0].baz'
 function setDeep(obj: any, path: string, value: any, setLabel?: string) {
