@@ -24,3 +24,30 @@ We can use the `[0]` syntax to create a nested array field, like this:
   <u-field name="fruits[1]"></u-field>
 </template>
 ```
+
+## Reset form with nested value
+
+You can use nested values to clear the form data or populate the form with specified data.
+
+```vue
+<script setup>
+import { ref } from "vue";
+const formRef = ref();
+
+function reset2() {
+  formRef.value.reset({ address: { country: "Foo" } });
+}
+</script>
+<template>
+  <u-form ref="formRef">
+    <u-field name="address.country" v-slot="{ value, update }">
+      <input f-model />
+    </u-field>
+
+    <!-- click this button will clear the form -->
+    <u-reset>Reset</u-reset>
+
+    <button type="button" @click="reset2">Reset With Data</button>
+  </u-form>
+</template>
+```
