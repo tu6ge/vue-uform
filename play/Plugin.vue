@@ -41,7 +41,9 @@ const val4 = ref("content");
     val4: {{ val4 }}
     <u-field v-model="val4" v-slot="{ value, update }">
       <textarea f-model></textarea>
-      <input type="tel" f-model />
+      <el-input type="tel" f-model />
+      <v-text-field label="Text" f-model></v-text-field>
+      <a-input f-model:value></a-input>
     </u-field>
   </div>
 </template>

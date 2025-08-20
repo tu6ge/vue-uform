@@ -147,4 +147,10 @@ will generate this code:
 
 <!-- Element Plus UI -->
 <el-input f-model></el-input>
+
+<!-- Antd UI -->
+<a-input f-model:value></a-input>
+
+<!-- Vuetify UI -->
+<v-text-field label="Text" f-model></v-text-field>
 ```
