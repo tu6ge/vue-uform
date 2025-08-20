@@ -1,6 +1,6 @@
 {
   "name": "vue-uform",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Vue-uForm is an unstyled, flexible form validation library for Vue 3, focusing on component-driven design.",
   "type": "module",
   "files": [
