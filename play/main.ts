@@ -4,6 +4,7 @@ import Plugin from "./Plugin.vue";
 import Checkbox2 from "./Checkbox.vue";
 import MySelect from "./MySelect.vue";
 import Antd from "ant-design-vue";
+import { Field } from "vant";
 
 import { plugin } from "vue-uform";
 
@@ -12,6 +13,9 @@ import "element-plus/dist/index.css";
 
 // Antd
 import "ant-design-vue/dist/reset.css";
+
+// vant
+import "vant/lib/index.css";
 
 // Vuetify
 import "vuetify/styles";
@@ -25,4 +29,4 @@ const vuetify = createVuetify({
 
 const app = createApp(Plugin);
 
-app.use(plugin).use(vuetify).use(Antd).mount("#app");
+app.use(plugin).use(vuetify).use(Antd).use(Field).mount("#app");

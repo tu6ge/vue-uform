@@ -44,6 +44,7 @@ const val4 = ref("content");
       <el-input type="tel" f-model />
       <v-text-field label="Text" f-model></v-text-field>
       <a-input f-model:value></a-input>
+      <van-field f-model placeholder="vant example"></van-field>
     </u-field>
   </div>
 </template>

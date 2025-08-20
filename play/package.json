@@ -22,6 +22,7 @@
     "ant-design-vue": "~4.2.6",
     "element-plus": "^2.10.5",
     "naive-ui": "^2.42.0",
+    "vant": "^4.9.21",
     "vue-uform": "workspace:^",
     "vuetify": "^3.9.5"
   }
