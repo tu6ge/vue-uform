@@ -1,10 +1,10 @@
 # Nest of Object / Array <Badge type="tip" text="+0.3.0" />
 
-vue-uform support nest form field, this has object and array two way of nest.
+vue-uform supports nested form fields, including both objects and arrays.
 
 ## Object Nest
 
-this is an example of object nest method:
+Here is an example of nesting with an object:
 
 ```vue
 <template>
@@ -12,11 +12,11 @@ this is an example of object nest method:
 </template>
 ```
 
-we can found dot in name prop of `u-field` component.
+We use a dot in the `name` prop of the `u-field` component to access nested object properties.
 
 ## Array Nest
 
-we can useing `[0]` grammar to create an array nest field. like this:
+We can use the `[0]` syntax to create a nested array field, like this:
 
 ```vue
 <template>
