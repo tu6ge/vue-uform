@@ -7,6 +7,9 @@ export default defineConfig({
   base: process.env.NODE_ENV === "production" ? "/vue-uform/" : "/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    search: {
+      provider: "local",
+    },
     nav: [
       { text: "Home", link: "/" },
       //{ text: "API", link: "/api" },
