@@ -153,4 +153,7 @@ will generate this code:
 
 <!-- Vuetify UI -->
 <v-text-field label="Text" f-model></v-text-field>
+
+<!-- Vant UI -->
+<van-field f-model></van-field>
 ```
