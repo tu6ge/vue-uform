@@ -41,7 +41,7 @@ import { plugin } from "vue-uform";
 
 const app = createApp(App);
 
-app.use(plugin, {}).mount("#app");
+app.use(plugin).mount("#app");
 ```
 
 4. This is a simple example:
