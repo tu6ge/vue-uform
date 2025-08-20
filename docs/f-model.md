@@ -89,23 +89,27 @@ Bind the select value directly. The field will be updated when selected.
 the sugar code:
 
 ```vue
-<select f-model>
-  <option disabled value="">Please select one</option>
-  <option>A</option>
-  <option>B</option>
-  <option>C</option>
-</select>
+<template>
+  <select f-model>
+    <option disabled value="">Please select one</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+</template>
 ```
 
 will generate this code:
 
 ```vue
-<select :value="value" @change="update($event.target.value)">
-  <option disabled value="">Please select one</option>
-  <option>A</option>
-  <option>B</option>
-  <option>C</option>
-</select>
+<template>
+  <select :value="value" @change="update($event.target.value)">
+    <option disabled value="">Please select one</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+</template>
 ```
 
 6. select with multiple, this `u-field`'s value is must an array
@@ -113,47 +117,55 @@ will generate this code:
 the sugar code:
 
 ```vue
-<select f-model multiple>
-  <option disabled value="">Please select one</option>
-  <option>A</option>
-  <option>B</option>
-  <option>C</option>
-</select>
+<template>
+  <select f-model multiple>
+    <option disabled value="">Please select one</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+</template>
 ```
 
 will generate this code:
 
 ```vue
-<select
-  multiple
-  @change="
-    update(
-      Array.from($event.target.selectedOptions).map((option) => option.value)
-    )
-  "
->
-  <option disabled value="" :selected="value.find((res) => res == '')">Please select one</option>
-  <option :selected="value.find((res) => res == 'A')">A</option>
-  <option :selected="value.find((res) => res == 'B')">B</option>
-  <option :selected="value.find((res) => res == 'C')">C</option>
-</select>
+<template>
+  <select
+    multiple
+    @change="
+      update(
+        Array.from($event.target.selectedOptions).map((option) => option.value)
+      )
+    "
+  >
+    <option disabled value="" :selected="value.find((res) => res == '')">
+      Please select one
+    </option>
+    <option :selected="value.find((res) => res == 'A')">A</option>
+    <option :selected="value.find((res) => res == 'B')">B</option>
+    <option :selected="value.find((res) => res == 'C')">C</option>
+  </select>
+</template>
 ```
 
 7. third UI component examples:
 
 ```vue
-<!-- Naive UI -->
-<n-input f-model:value></n-input>
+<template>
+  <!-- Naive UI -->
+  <n-input f-model:value></n-input>
 
-<!-- Element Plus UI -->
-<el-input f-model></el-input>
+  <!-- Element Plus UI -->
+  <el-input f-model></el-input>
 
-<!-- Antd UI -->
-<a-input f-model:value></a-input>
+  <!-- Antd UI -->
+  <a-input f-model:value></a-input>
 
-<!-- Vuetify UI -->
-<v-text-field label="Text" f-model></v-text-field>
+  <!-- Vuetify UI -->
+  <v-text-field label="Text" f-model></v-text-field>
 
-<!-- Vant UI -->
-<van-field f-model></van-field>
+  <!-- Vant UI -->
+  <van-field f-model></van-field>
+</template>
 ```
