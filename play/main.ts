@@ -3,6 +3,7 @@ import App from "./App.vue";
 import Plugin from "./Plugin.vue";
 import Checkbox2 from "./Checkbox.vue";
 import MySelect from "./MySelect.vue";
+import NestArray from "./NestArray.vue";
 import Antd from "ant-design-vue";
 import { Field } from "vant";
 
@@ -27,6 +28,6 @@ const vuetify = createVuetify({
   directives,
 });
 
-const app = createApp(Plugin);
+const app = createApp(NestArray);
 
 app.use(plugin).use(vuetify).use(Antd).use(Field).mount("#app");

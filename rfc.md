@@ -146,7 +146,12 @@ function isfruit(node) {
     </u-field>
 
     <!-- render to "<div> default slot </div>" -->
-    <u-field-array name="fruits" class="my-class">
+    <u-field-array
+      name="fruits"
+      class="my-class"
+      :scheme="arrayScheme"
+      v-slot="{ fields, push, insert, remove }"
+    >
       <label>Fruit List</label>
       <div>
         <u-field name="fruits[0]" v-slot="{ value, update }">
