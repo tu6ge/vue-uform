@@ -43,6 +43,10 @@ export default defineConfig({
             text: "nest object/array",
             link: "/nest",
           },
+          {
+            text: "&lt;u-field-array&gt;",
+            link: "/u-field-array",
+          },
         ],
       },
       {

@@ -32,6 +32,8 @@ export const FormSubmitUseidProvideKey = Symbol("u-form-submit-useid");
 export const FormSchemeKey = Symbol("form-scheme");
 export const FormResetUseid = Symbol("form-reset-useid");
 export const FormResetButton = Symbol("form-reset-button");
+export const FormArrayRemove = Symbol("form-array-remove");
+export const FormArrayPush = Symbol("form-array-push");
 
 export const UForm = defineComponent(
   (props, ctx) => {
@@ -46,6 +48,12 @@ export const UForm = defineComponent(
     const thisValidatorResult = ref<FormValidatorResult>({});
     provide(FormUpdateValidatorProvideKey, (key: string, value: boolean) => {
       thisValidatorResult.value[key] = value;
+    });
+    provide(FormArrayRemove, (key: string, index: number) => {
+      arrayRemoveDeep(thisValues.value, key, index);
+    });
+    provide(FormArrayPush, (key: string, item: unknown) => {
+      arrayPushDeep(thisValues.value, key, item);
     });
     const doSubmitUseid = ref<Symbol>();
     provide(FormSubmitUseidProvideKey, doSubmitUseid);
@@ -230,4 +238,68 @@ function formUpdateLabel(values: Ref<FormValues>, key: string, label: string) {
 
 function formUpdateValue(values: Ref<FormValues>, key: string, value: unknown) {
   setDeep(values.value, key, value);
+}
+
+function arrayRemoveDeep(obj: any, path: string, index: number) {
+  if (!path) return;
+  const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
+  let current = obj;
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    // Last part: set value/label
+    if (i === parts.length - 1) {
+      if (current[part] == undefined) {
+        current[part] = [];
+      }
+      if (Array.isArray(current[part])) {
+        current[part].splice(index, 1);
+      } else {
+        throw new Error("u-field-array must be bind an array value");
+      }
+      return;
+    }
+    // Not last part: ensure intermediate object/array
+    if (!(part in current)) {
+      // Next part is number? Make array, else object
+      const nextPart = parts[i + 1];
+      if (/^\d+$/.test(nextPart)) {
+        current[part] = [];
+      } else {
+        current[part] = {};
+      }
+    }
+    current = current[part];
+  }
+}
+
+function arrayPushDeep(obj: any, path: string, item: unknown) {
+  if (!path) return;
+  const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
+  let current = obj;
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    // Last part: set value/label
+    if (i === parts.length - 1) {
+      if (current[part] == undefined) {
+        current[part] = [];
+      }
+      if (Array.isArray(current[part])) {
+        current[part].push(item);
+      } else {
+        throw new Error("u-field-array must be bind an array value");
+      }
+      return;
+    }
+    // Not last part: ensure intermediate object/array
+    if (!(part in current)) {
+      // Next part is number? Make array, else object
+      const nextPart = parts[i + 1];
+      if (/^\d+$/.test(nextPart)) {
+        current[part] = [];
+      } else {
+        current[part] = {};
+      }
+    }
+    current = current[part];
+  }
 }

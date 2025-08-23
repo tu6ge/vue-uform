@@ -20,6 +20,7 @@ import {
   FormResetUseid,
 } from "./form";
 import { parseValidations, validatior } from "./validation";
+import { FieldArrayUseid } from "./field-array";
 
 export interface FieldProps {
   name: string;
@@ -103,6 +104,11 @@ export const UField = defineComponent(
       } else {
         value.value = "";
       }
+    });
+    const arrayUseid = inject(FieldArrayUseid, ref<Symbol>());
+    watch(arrayUseid, () => {
+      const val = getDeep(formValues.value, props.name);
+      value.value = val.value;
     });
 
     const update = (val: unknown, type: FieldUpdateType = "primitive") => {
@@ -255,7 +261,10 @@ export function createFieldNode(
   };
 }
 
-function getThisValueFromForm(values: Ref<FormValues>, name: string): unknown {
+export function getThisValueFromForm(
+  values: Ref<FormValues>,
+  name: string
+): unknown {
   if (!name) {
     return undefined;
   }
