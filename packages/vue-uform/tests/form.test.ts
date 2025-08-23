@@ -2,6 +2,7 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import { plugin, SchemeArg } from "../src/main";
 import { h, ref } from "vue";
+import { arrayPushDeep, arrayRemoveDeep, FormValues } from "../src/form";
 
 test("test form component values props", async () => {
   const wrapper = mount(
@@ -289,4 +290,42 @@ test("test form component custom scheme without validation message", async () =>
   await wrapper.find("button").trigger("click");
 
   expect((wrapper.vm.data as { name: string }).name).toBe("foo");
+});
+
+test("test form array arrayRemoveDeep", () => {
+  const formValue = ref<FormValues>({});
+  formValue.value = {
+    name: [
+      { label: "", value: "foo" },
+      { label: "", value: "bar" },
+      { label: "", value: "foobar" },
+    ],
+  };
+  arrayRemoveDeep(formValue.value, "name", 1);
+
+  expect(formValue.value).toStrictEqual({
+    name: [
+      { label: "", value: "foo" },
+      { label: "", value: "foobar" },
+    ],
+  });
+});
+
+test("test form array arrayPushDeep", () => {
+  const formValue = ref<FormValues>({});
+  formValue.value = {
+    name: [
+      { label: "", value: "foo" },
+      { label: "", value: "bar" },
+    ],
+  };
+  arrayPushDeep(formValue.value, "name", { label: "xxx", value: "foobar" });
+
+  expect(formValue.value).toStrictEqual({
+    name: [
+      { label: "", value: "foo" },
+      { label: "", value: "bar" },
+      { label: "xxx", value: "foobar" },
+    ],
+  });
 });

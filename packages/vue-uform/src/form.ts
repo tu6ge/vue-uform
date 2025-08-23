@@ -240,7 +240,7 @@ function formUpdateValue(values: Ref<FormValues>, key: string, value: unknown) {
   setDeep(values.value, key, value);
 }
 
-function arrayRemoveDeep(obj: any, path: string, index: number) {
+export function arrayRemoveDeep(obj: any, path: string, index: number) {
   if (!path) return;
   const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
   let current = obj;
@@ -272,7 +272,7 @@ function arrayRemoveDeep(obj: any, path: string, index: number) {
   }
 }
 
-function arrayPushDeep(obj: any, path: string, item: unknown) {
+export function arrayPushDeep(obj: any, path: string, item: unknown) {
   if (!path) return;
   const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
   let current = obj;

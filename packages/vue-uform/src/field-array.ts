@@ -97,7 +97,7 @@ function isFormValueNode(x: any): x is FormValueNode {
  * - 已是 {label,value} -> 原样（缺省字段补齐）
  * - 对象/数组 -> 递归
  */
-function buildFormItem(template: any): any {
+export function buildFormItem(template: any): any {
   if (isFormValueNode(template)) {
     return { label: template.label ?? "", value: template.value };
   }
@@ -116,7 +116,7 @@ function buildFormItem(template: any): any {
 }
 
 /** 获取路径处的数组；不存在或不是数组则返回 []（只读拿数据用） */
-function getArrayFromForm(values: Ref<FormValues>, path: string): any[] {
+export function getArrayFromForm(values: Ref<FormValues>, path: string): any[] {
   const segs = pathToSegments(path);
   let cur: any = values.value;
   for (const seg of segs) {
