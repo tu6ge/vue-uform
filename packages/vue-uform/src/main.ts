@@ -8,7 +8,13 @@ import { UFieldArray } from "./field-array";
 
 export type { SchemeArg, FieldNode };
 
-export { UForm as Form, UField as Field, UReset as Reset, USubmit as Submit };
+export {
+  UForm as Form,
+  UField as Field,
+  UFieldArray as FieldArray,
+  UReset as Reset,
+  USubmit as Submit,
+};
 
 export const plugin = {
   install(app: App, option: any = {}) {
