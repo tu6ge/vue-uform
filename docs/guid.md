@@ -121,11 +121,11 @@ global register components
 
 ```ts
 // ./src/main.ts
-import { plugin } from "vue-uform";
+import { plugin as VueuForm } from "vue-uform";
 
 const app = createApp(App);
 
-app.use(plugin).mount("#app");
+app.use(VueuForm).mount("#app");
 ```
 
 or import components in Vue SFC file

@@ -37,11 +37,11 @@ export default defineConfig({
 3. install Vue plugin in main.ts
 
 ```ts
-import { plugin } from "vue-uform";
+import { plugin as VueuForm } from "vue-uform";
 
 const app = createApp(App);
 
-app.use(plugin).mount("#app");
+app.use(VueuForm).mount("#app");
 ```
 
 4. This is a simple example:

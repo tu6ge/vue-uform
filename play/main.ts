@@ -7,7 +7,7 @@ import NestArray from "./NestArray.vue";
 import Antd from "ant-design-vue";
 import { Field } from "vant";
 
-import { plugin } from "vue-uform";
+import { plugin as VueuForm } from "vue-uform";
 
 // Element-Plus
 import "element-plus/dist/index.css";
@@ -30,4 +30,4 @@ const vuetify = createVuetify({
 
 const app = createApp(NestArray);
 
-app.use(plugin).use(vuetify).use(Antd).use(Field).mount("#app");
+app.use(VueuForm).use(vuetify).use(Antd).use(Field).mount("#app");
