@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --recursive --parallel --stream run dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:coverage": "pnpm -r --parallel --filter=!./play test --coverage",
+    "coverage:merge": "lcov-result-merger 'packages/**/coverage/lcov.info' > coverage/lcov.info",
+    "coverage:upload": "coveralls < coverage/lcov.info",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -15,6 +17,9 @@
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@stackblitz/sdk": "^1.11.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "coveralls": "^3.1.1",
+    "lcov-result-merger": "^5.0.1",
     "typescript": "^5.9.2",
     "vitepress": "^1.6.4",
     "vue": "^3.5.18"

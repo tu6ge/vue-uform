@@ -1,0 +1,36 @@
+name: Test and Coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: |
+          corepack enable
+          pnpm install
+
+      - name: Run tests with coverage (all packages)
+        run: pnpm test:coverage
+
+      - name: Merge coverage
+        run: pnpm coverage:merge
+
+      - name: Upload to Coveralls
+        run: pnpm coverage:upload
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
