@@ -30,7 +30,9 @@ jobs:
         run: pnpm test:coverage
 
       - name: Merge coverage
-        run: pnpm coverage:merge
+        run: |
+          mkdir coverage
+          pnpm coverage:merge
 
       - name: Upload to Coveralls
         run: pnpm coverage:upload
