@@ -6,7 +6,7 @@
     "dev": "pnpm --recursive --parallel --stream run dev",
     "test:coverage": "pnpm -r --parallel --filter=!./play test --coverage",
     "coverage:merge": "lcov-result-merger 'packages/**/coverage/lcov.info' coverage/lcov.info",
-    "coverage:upload": "coveralls < coverage/lcov.info",
+    "coverage:upload": "coveralls < ./coverage/lcov.info",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
