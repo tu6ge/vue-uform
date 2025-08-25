@@ -26,13 +26,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Make coverage dir
+        run: mkdir coverage
+
       - name: Run tests with coverage (all packages)
         run: pnpm test:coverage
-
-      - name: Merge coverage
-        run: |
-          mkdir coverage
-          pnpm coverage:merge
 
       - name: Upload to Coveralls
         run: pnpm coverage:upload
