@@ -2,6 +2,8 @@
 
 > Vue-uForm is an unstyled, flexible form validation library for Vue 3, focusing on component-driven design.
 
+[![Coverage Status](https://coveralls.io/repos/github/tu6ge/vue-uform/badge.svg?branch=main)](https://coveralls.io/github/tu6ge/vue-uform?branch=main)
+
 A next-generation Vue form validation library. the library regards components as first-class citizens. All functions including data transfer and form validation, revolve around components. It has the following functions:
 
 - 🎨 Works with any UI component library
